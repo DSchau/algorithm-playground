@@ -3,7 +3,7 @@ import styled from 'react-emotion';
 
 const Container = styled.div`
   display: flex;
-  background-color: #EEE;
+  background-color: #eee;
 
   height: 100%;
   width: 100%;

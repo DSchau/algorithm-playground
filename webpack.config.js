@@ -15,7 +15,21 @@ module.exports = ({ env }) => ({
       {
         test: /\.jsx?/,
         include: path.join(__dirname, 'src'),
-        use: ['babel-loader']
+        use: ['babel-loader'],
+        exclude: [
+          path.join(__dirname, 'src/Worker')
+        ]
+      },
+      {
+        test: /\.js$/,
+        include: path.join(__dirname, 'src/Worker'),
+        use: ['babel-loader', 'worker-loader']
+      },
+      {
+        test: /\.js$/,
+        use: ['raw-loader'],
+        include: path.join(__dirname, 'algorithms'),
+        exclude: path.join(__dirname, 'algorithms/index')
       },
       {
         test: /\.css$/,

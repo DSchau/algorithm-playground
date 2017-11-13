@@ -5,7 +5,7 @@ const breakpointFn = (breakpoint: number) => {
   ${content}
 }
   `;
-}
+};
 
 export const SMALL = breakpointFn(0);
 export const MEDIUM = breakpointFn(400);

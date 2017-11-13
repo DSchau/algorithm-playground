@@ -8,11 +8,7 @@ const Footer = styled.footer`
 `;
 
 function FooterComponent() {
-  return (
-    <Footer>
-
-    </Footer>
-  );
+  return <Footer />;
 }
 
-export { FooterComponent as Footer }
+export { FooterComponent as Footer };

@@ -29,20 +29,30 @@ export const CodeEditor = class extends Component {
     });
 
     this.editor.on('change', this.handleChange);
+
+    this.updateTextarea(this.props);
+  }
+
+  componentWillReceiveProps(props) {
+    this.updateTextarea(props);
+  }
+
+  updateTextarea({ algorithm }) {
+    const { value } = algorithm;
+    this.editor.setValue(value[Object.keys(value).pop()].toString());
   }
 
   handleChange = ev => {
-    console.log(ev);
-  }
+  };
 
   render() {
     return (
       <Container>
-        <textarea ref={node => this.textArea = node} />
+        <textarea ref={node => (this.textArea = node)} />
       </Container>
     );
   }
-}
+};
 
 injectGlobal`
   .CodeMirror {

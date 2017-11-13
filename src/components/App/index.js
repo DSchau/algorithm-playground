@@ -2,7 +2,7 @@
 import React from 'react';
 import styled, { injectGlobal } from 'react-emotion';
 
-import { CodeEditor, CodePreview, Footer, Header } from '../';
+import { CodeEditor, CodePreview, Footer, Header, Provider } from '../';
 
 import { LARGE } from '../../style';
 
@@ -25,19 +25,23 @@ const Content = styled.main`
 
   ${LARGE`
 flex-direction: row;
-  `}
+  `};
 `;
 
 export function App() {
   return (
-    <Container>
-      <Header />
-      <Content>
-          <CodeEditor />
-          <CodePreview />
-      </Content>
-      <Footer />
-    </Container>
+    <Provider
+      render={({ actions, algorithm, algorithms, defaultAlgorithm }) => (
+        <Container>
+          <Header algorithms={algorithms} defaultAlgorithm={defaultAlgorithm} handleAlgorithmChange={actions.handleAlgorithmChange} />
+          <Content>
+            <CodeEditor algorithm={algorithm} />
+            <CodePreview />
+          </Content>
+          <Footer />
+        </Container>
+      )}
+    />
   );
 }
 
