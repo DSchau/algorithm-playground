@@ -16,7 +16,16 @@ export class Provider extends Component {
   handleAlgorithmChange = algorithm => {
     this.setState({
       algorithm: getAlgorithm(algorithm, ALGORITHMS)
-    })
+    });
+  };
+
+  handleAlgorithmUpdate = value => {
+    // this.setState({
+    //   algorithm: {
+    //     ...this.state.algorithm,
+    //     value: code
+    //   }
+    // });
   };
 
   handleThemeChange = primary => {
@@ -26,7 +35,7 @@ export class Provider extends Component {
         primary
       }
     });
-  }
+  };
 
   render() {
     const { render, children = render } = this.props;
@@ -34,6 +43,7 @@ export class Provider extends Component {
     return children({
       actions: {
         handleAlgorithmChange: this.handleAlgorithmChange,
+        handleAlgorithmUpdate: this.handleAlgorithmUpdate,
         handleThemeChange: this.handleThemeChange
       },
       algorithm,

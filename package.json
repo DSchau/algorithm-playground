@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack --env.production",
-    "format": "prettier \"src/**/*.js\" --single-quote --write",
+    "format": "prettier \"src/**/*.js\" \"*.js\" --single-quote --write",
     "start": "webpack-dev-server --env.development"
   },
   "devDependencies": {
@@ -30,7 +30,7 @@
   "dependencies": {
     "acorn": "~5.2.1",
     "babel-plugin-emotion": "~8.0.10",
-    "buble": "~0.17.3",
+    "buble": "~0.16.0",
     "codemirror": "~5.31.0",
     "emotion": "~8.0.10",
     "emotion-theming": "~8.0.10",

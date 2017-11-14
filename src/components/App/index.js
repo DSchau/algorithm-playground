@@ -3,7 +3,7 @@ import React from 'react';
 import styled, { injectGlobal } from 'react-emotion';
 import { ThemeProvider } from 'emotion-theming';
 
-import { CodeEditor, CodePreview, Footer, Header, Provider } from '../';
+import { AlgorithmPreview, CodeEditor, Footer, Header, Provider } from '../';
 
 import { LARGE } from '../../style';
 
@@ -31,20 +31,26 @@ flex-direction: row;
 
 export function App() {
   return (
-      <Provider
-        render={({ actions, algorithm, algorithms, defaultAlgorithm, theme }) => (
-          <ThemeProvider theme={theme}>
-            <Container>
-              <Header algorithms={algorithms} defaultAlgorithm={defaultAlgorithm} onAlgorithmChange={actions.handleAlgorithmChange} onThemeChange={actions.handleThemeChange} theme={theme} />
-              <Content>
-                <CodeEditor algorithm={algorithm} theme={theme} />
-                <CodePreview />
-              </Content>
-              <Footer />
-            </Container>
-          </ThemeProvider>
-        )}
-      />
+    <Provider
+      render={({ actions, algorithm, algorithms, defaultAlgorithm, theme }) => (
+        <ThemeProvider theme={theme}>
+          <Container>
+            <Header
+              algorithms={algorithms}
+              defaultAlgorithm={defaultAlgorithm}
+              onAlgorithmChange={actions.handleAlgorithmChange}
+              onThemeChange={actions.handleThemeChange}
+              theme={theme}
+            />
+            <Content>
+              <CodeEditor algorithm={algorithm} onUpdate={actions.handleAlgorithmUpdate} theme={theme} />
+              <AlgorithmPreview algorithm={algorithm.value} />
+            </Content>
+            <Footer />
+          </Container>
+        </ThemeProvider>
+      )}
+    />
   );
 }
 

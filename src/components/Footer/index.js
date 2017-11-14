@@ -43,12 +43,22 @@ const GithubIcon = styled(Github)`
   font-size: 20px;
 `;
 
-
 function FooterComponent() {
   return (
     <Footer>
-      <Description>Made with <CodeIcon /> by <Link href="https://dustinschau.com" target="_blank" rel="noopener">Dustin Schau</Link></Description>
-      <Link href="https://github.com/dschau/algorithm-playground" target="_blank" rel="noopener"><GithubIcon /></Link>
+      <Description>
+        Made with <CodeIcon /> by{' '}
+        <Link href="https://dustinschau.com" target="_blank" rel="noopener">
+          Dustin Schau
+        </Link>
+      </Description>
+      <Link
+        href="https://github.com/dschau/algorithm-playground"
+        target="_blank"
+        rel="noopener"
+      >
+        <GithubIcon />
+      </Link>
     </Footer>
   );
 }

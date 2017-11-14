@@ -22,7 +22,7 @@ const Select = styled.select`
   font-size: 1.3rem;
   padding-right: 1.3rem;
   outline: none;
-  zIndex: 2;
+  zindex: 2;
 `;
 
 const DownIcon = styled(DownIconElement)`

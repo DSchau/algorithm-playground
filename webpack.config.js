@@ -14,7 +14,10 @@ module.exports = ({ env }) => ({
     rules: [
       {
         test: /\.jsx?/,
-        include: path.join(__dirname, 'src'),
+        include: [
+          path.join(__dirname, 'src'),
+          path.join(__dirname, 'src/algorithms/index')
+        ],
         use: ['babel-loader'],
         exclude: [
           path.join(__dirname, 'src/Worker')
@@ -23,13 +26,13 @@ module.exports = ({ env }) => ({
       {
         test: /\.js$/,
         include: path.join(__dirname, 'src/Worker'),
-        use: ['babel-loader', 'worker-loader']
+        use: ['worker-loader', 'babel-loader']
       },
       {
         test: /\.js$/,
         use: ['raw-loader'],
-        include: path.join(__dirname, 'algorithms'),
-        exclude: path.join(__dirname, 'algorithms/index')
+        include: path.join(__dirname, 'src/algorithms'),
+        exclude: path.join(__dirname, 'src/algorithms/index')
       },
       {
         test: /\.css$/,
@@ -37,12 +40,14 @@ module.exports = ({ env }) => ({
       },
       {
         test: /\.woff2?/,
-        use: [{
-          loader: 'file-loader',
-          options: {
-            name: 'static/media/[name].[hash:8].[ext]'
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'static/media/[name].[hash:8].[ext]'
+            }
           }
-        }]
+        ]
       }
     ]
   },

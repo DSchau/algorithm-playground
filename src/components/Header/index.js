@@ -22,11 +22,25 @@ const LightbulbIcon = styled(InvertedIcon)`
   font-size: 24px;
 `;
 
-function HeaderComponent({ algorithms, defaultAlgorithm, onAlgorithmChange, onThemeChange, theme }) {
+function HeaderComponent({
+  algorithms,
+  defaultAlgorithm,
+  onAlgorithmChange,
+  onThemeChange,
+  theme
+}) {
   return (
     <Header>
-      <Selector defaultValue={defaultAlgorithm} items={algorithms} onAlgorithmChange={onAlgorithmChange} />
-      <LightbulbIcon onClick={() => onThemeChange(theme.primary === 'dark' ? 'light' : 'dark')} />
+      <Selector
+        defaultValue={defaultAlgorithm}
+        items={algorithms}
+        onAlgorithmChange={onAlgorithmChange}
+      />
+      <LightbulbIcon
+        onClick={() =>
+          onThemeChange(theme.primary === 'dark' ? 'light' : 'dark')
+        }
+      />
     </Header>
   );
 }

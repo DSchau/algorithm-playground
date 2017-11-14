@@ -51,10 +51,11 @@ export const CodeEditor = class extends Component {
 
   updateTextarea({ algorithm }) {
     const { value } = algorithm;
-    this.editor.setValue(value[Object.keys(value).pop()].toString());
+    this.editor.setValue(value);
   }
 
   handleChange = ev => {
+    this.props.onUpdate(ev.getValue());
   };
 
   render() {
