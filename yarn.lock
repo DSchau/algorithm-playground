@@ -844,6 +844,12 @@ babel-plugin-emotion@^8.0.10, babel-plugin-emotion@~8.0.10:
     source-map "^0.5.7"
     touch "^1.0.0"
 
+babel-plugin-polished@~1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-polished/-/babel-plugin-polished-1.1.0.tgz#7f6902ab8e9c20fc14cb53d596dd858880e357d3"
+  dependencies:
+    polished "^1.0.0"
+
 babel-plugin-syntax-jsx@^6.18.0:
   version "6.18.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-jsx/-/babel-plugin-syntax-jsx-6.18.0.tgz#0af32a9a6e13ca7a3fd5069e62d7b0f58d0d8946"
@@ -1700,6 +1706,12 @@ emojis-list@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/emojis-list/-/emojis-list-2.1.0.tgz#4daa4d9db00f9819880c79fa457ae5b09a1fd389"
 
+emotion-theming@~8.0.10:
+  version "8.0.10"
+  resolved "https://registry.yarnpkg.com/emotion-theming/-/emotion-theming-8.0.10.tgz#8d85efff3fe56006087015f0abd7b575f98dad05"
+  dependencies:
+    hoist-non-react-statics "^2.3.1"
+
 emotion-utils@^8.0.10:
   version "8.0.10"
   resolved "https://registry.yarnpkg.com/emotion-utils/-/emotion-utils-8.0.10.tgz#b42dd1386f07d74e45d5c78d7675f6c8f3165ae1"
@@ -1999,6 +2011,13 @@ fbjs@^0.8.16:
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.9"
 
+file-loader@~1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/file-loader/-/file-loader-1.1.5.tgz#91c25b6b6fbe56dae99f10a425fd64933b5c9daa"
+  dependencies:
+    loader-utils "^1.0.2"
+    schema-utils "^0.3.0"
+
 filename-regex@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/filename-regex/-/filename-regex-2.0.1.tgz#c1c4b9bee3e09725ddb106b75c1e301fe2f18b26"
@@ -2273,7 +2292,7 @@ hoek@2.x.x:
   version "2.16.3"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-2.16.3.tgz#20bb7403d3cea398e91dc4710a8ff1b8274a25ed"
 
-hoist-non-react-statics@^2.2.1:
+hoist-non-react-statics@^2.2.1, hoist-non-react-statics@^2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.3.1.tgz#343db84c6018c650778898240135a1420ee22ce0"
 
@@ -3394,6 +3413,10 @@ pkg-dir@^2.0.0:
   dependencies:
     find-up "^2.1.0"
 
+polished@^1.0.0, polished@~1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/polished/-/polished-1.9.0.tgz#76d277d6610dbcb85477dbba1bd1aa8e642741b6"
+
 portfinder@^1.0.9:
   version "1.0.13"
   resolved "https://registry.yarnpkg.com/portfinder/-/portfinder-1.0.13.tgz#bb32ecd87c27104ae6ee44b5a3ccbf0ebb1aede9"
@@ -3822,6 +3845,16 @@ react-emotion@~8.0.10:
   dependencies:
     babel-plugin-emotion "^8.0.10"
     emotion-utils "^8.0.10"
+
+react-icon-base@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-icon-base/-/react-icon-base-2.1.0.tgz#a196e33fdf1e7aaa1fda3aefbb68bdad9e82a79d"
+
+react-icons@~2.2.7:
+  version "2.2.7"
+  resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-2.2.7.tgz#d7860826b258557510dac10680abea5ca23cf650"
+  dependencies:
+    react-icon-base "2.1.0"
 
 react-redux@~5.0.6:
   version "5.0.6"
@@ -4550,6 +4583,14 @@ type-is@~1.6.15:
   dependencies:
     media-typer "0.3.0"
     mime-types "~2.1.15"
+
+typeface-bitter@~0.0.44:
+  version "0.0.44"
+  resolved "https://registry.yarnpkg.com/typeface-bitter/-/typeface-bitter-0.0.44.tgz#fa649a0c41b41b97d786ab32a13d4bcc52d9696e"
+
+typeface-montserrat@~0.0.45:
+  version "0.0.45"
+  resolved "https://registry.yarnpkg.com/typeface-montserrat/-/typeface-montserrat-0.0.45.tgz#17bd9a48d1b4a3ed7f3110db8e18ea828e88594b"
 
 ua-parser-js@^0.7.9:
   version "0.7.17"

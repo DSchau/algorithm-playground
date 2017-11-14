@@ -34,7 +34,19 @@ export const CodeEditor = class extends Component {
   }
 
   componentWillReceiveProps(props) {
+    const { theme } = props;
+    if (theme.primary !== this.props.theme.primary) {
+      this.editor.setOption(
+        'theme',
+        theme.primary === 'dark' ? 'dracula' : 'default'
+      );
+    }
     this.updateTextarea(props);
+  }
+
+  componentWillUnmount() {
+    this.editor.off('change', this.handleChange);
+    this.editor.toTextArea();
   }
 
   updateTextarea({ algorithm }) {

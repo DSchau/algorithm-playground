@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import styled, { injectGlobal } from 'react-emotion';
+import { ThemeProvider } from 'emotion-theming';
 
 import { CodeEditor, CodePreview, Footer, Header, Provider } from '../';
 
@@ -30,18 +31,20 @@ flex-direction: row;
 
 export function App() {
   return (
-    <Provider
-      render={({ actions, algorithm, algorithms, defaultAlgorithm }) => (
-        <Container>
-          <Header algorithms={algorithms} defaultAlgorithm={defaultAlgorithm} handleAlgorithmChange={actions.handleAlgorithmChange} />
-          <Content>
-            <CodeEditor algorithm={algorithm} />
-            <CodePreview />
-          </Content>
-          <Footer />
-        </Container>
-      )}
-    />
+      <Provider
+        render={({ actions, algorithm, algorithms, defaultAlgorithm, theme }) => (
+          <ThemeProvider theme={theme}>
+            <Container>
+              <Header algorithms={algorithms} defaultAlgorithm={defaultAlgorithm} onAlgorithmChange={actions.handleAlgorithmChange} onThemeChange={actions.handleThemeChange} theme={theme} />
+              <Content>
+                <CodeEditor algorithm={algorithm} theme={theme} />
+                <CodePreview />
+              </Content>
+              <Footer />
+            </Container>
+          </ThemeProvider>
+        )}
+      />
   );
 }
 

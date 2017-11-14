@@ -9,6 +9,7 @@ module.exports = {
     ['emotion', {
       extractStatic: process.env.NODE_ENV === 'production',
       sourceMap: process.env.NODE_ENV === 'production'
-    }]
+    }],
+    'babel-plugin-polished'
   ]
 };
