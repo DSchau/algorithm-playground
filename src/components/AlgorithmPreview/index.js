@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'react-emotion';
 
 import { transpile } from '../../util';
+import { Canvas } from './components';
 
 const Container = styled.div`
   display: flex;
@@ -9,6 +10,8 @@ const Container = styled.div`
 
   height: 100%;
   width: 100%;
+
+  overflow: auto;
 `;
 
 export class AlgorithmPreview extends Component {
@@ -29,13 +32,12 @@ export class AlgorithmPreview extends Component {
   }
 
   transformCode = code => {
-    return transpile(code)
-      .then(transformed => {
-        this.setState({
-          fn: transformed
-        });
+    return transpile(code).then(transformed => {
+      this.setState({
+        fn: transformed
       });
-  }
+    });
+  };
 
   render() {
     const { fn } = this.state;
@@ -45,10 +47,10 @@ export class AlgorithmPreview extends Component {
       } catch {
         return ``;
       }
-    }
+    };
     return (
       <Container>
-        <h1>{apply()}</h1>
+        <Canvas theme={this.props.theme} />
       </Container>
     );
   }

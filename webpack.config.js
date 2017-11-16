@@ -20,12 +20,12 @@ module.exports = ({ env }) => ({
         ],
         use: ['babel-loader'],
         exclude: [
-          path.join(__dirname, 'src/Worker')
+          /\.worker.js$/
         ]
       },
       {
-        test: /\.js$/,
-        include: path.join(__dirname, 'src/Worker'),
+        test: /\.worker\.js$/,
+        include: path.join(__dirname, 'src'),
         use: ['worker-loader', 'babel-loader']
       },
       {

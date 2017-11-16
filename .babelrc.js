@@ -1,6 +1,9 @@
 module.exports = {
   presets: [
-    ['@babel/env', { modules: false }],
+    [
+      '@babel/env',
+      { modules: process.env.NODE_ENV === 'test' ? 'commonjs' : false }
+    ],
     '@babel/react',
     '@babel/flow',
     '@babel/stage-2'
@@ -13,6 +16,6 @@ module.exports = {
         sourceMap: process.env.NODE_ENV === 'production'
       }
     ],
-    'babel-plugin-polished'
+    'polished'
   ]
 };

@@ -1,3 +1,6 @@
+import 'babel-polyfill';
+import 'proxy-polyfill';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'normalize.css';
