@@ -3,8 +3,9 @@ import styled from 'react-emotion';
 import Play from 'react-icons/lib/md/play-arrow';
 import Replay from 'react-icons/lib/md/replay';
 
-import { createGrid, createRow, updateRow } from '../../util';
+import { createGrid, createRow, updateRow, updateRowAtPosition } from '../../util';
 import { delay, sortRow } from '../../../../util';
+import { ScaleIn } from '../../../../style';
 
 const Container = styled.div`
   height: 100%;
@@ -35,7 +36,9 @@ const StyledIcon = component => styled(component)`
   z-index: 2;
 
   font-size: 120px;
-  color: white;
+  color: ${({ theme }) => theme[theme.primary].base};
+
+  animation: ${ScaleIn} 0.3s cubic-bezier(.39, .575, .565, 1) both;
 `;
 
 class CanvasComponent extends Component {
@@ -69,16 +72,41 @@ class CanvasComponent extends Component {
       inProgress: true
     }, async () => {
       if (!this.state.sorted) {
-        let row = 0;
-        while (this.state.grid[row]) {
-          const sorted = await sortRow(this.state.grid[row]);
+        await Promise.all((this.state.grid || []).map(async (row, rowIndex) => {
+          const updates = await sortRow(row);
 
-          await delay();
+          let updateIndex = 0;
+          while (updateIndex < updates.length) {
+            const [index, block] = updates[updateIndex];
+            updateRowAtPosition(this.state.context)(rowIndex, index, block);
+            await delay(1);
+            updateIndex += 1;
+          }
 
-          updateRow(this.state.context)(sorted, row);
+          return updates;
+        }));
 
-          row += 1;
-        }
+
+        // const [row, secondRow] = this.state.grid;
+        // const updates = await sortRow(row);
+        // let changeIndex = 0;
+        // while (changeIndex < updates.length) {
+        //   const [index, block] = updates[changeIndex];
+        //   updateRowAtPosition(this.state.context)(0, index, block);
+        //   await delay(1);
+        //   changeIndex += 1;
+        // }
+        // await Promise.all(this.state.grid.map(async (row, rowIndex) => {
+        //   const updates = await sortRow(row);
+        //   let changeIndex = 0;
+        //   while (changeIndex < updates.length) {
+        //     const [index, block] = updates[changeIndex];
+        //     updateRowAtPosition(this.state.context)(rowIndex, index, block);
+        //     await delay(1);
+        //     changeIndex += 1;
+        //   }
+        //   return row;
+        // }));
 
         this.setState({
           inProgress: false,

@@ -1,4 +1,4 @@
-const BLOCK_SIZE = 5;
+const BLOCK_SIZE = 10;
 
 const randomColor = () => {
   const randomNum = num => Math.floor(Math.random() * num);
@@ -43,4 +43,9 @@ export const updateRow = context => (row, rowIndex) => {
     const { color, x, y, height, width } = block;
     return createBlock(context)(color)(i * BLOCK_SIZE, rowIndex * BLOCK_SIZE, height, width);
   });
+};
+
+export const updateRowAtPosition = context => (rowIndex, blockIndex, block) => {
+  const { color, x, y, height, width } = block;
+  return createBlock(context)(color)(blockIndex * BLOCK_SIZE, rowIndex * BLOCK_SIZE, height, width);
 };

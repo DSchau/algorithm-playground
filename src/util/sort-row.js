@@ -1,8 +1,7 @@
 import CanvasWorker from '../canvas.worker';
 
-const worker = new CanvasWorker();
-
 export function sortRow(row, sorter) {
+  const worker = new CanvasWorker();
   return new Promise((resolve, reject) => {
     worker.onmessage = ev => {
       resolve(ev.data);
