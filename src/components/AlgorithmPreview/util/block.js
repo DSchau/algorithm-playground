@@ -38,9 +38,9 @@ export const createGrid = context => ({ height, width, blockSize = BLOCK_SIZE })
   return grid;
 };
 
-export const updateRow = context => (row, index) => {
-  for (let i = 0; i < row.length; i++) {
-    const { color, x, y, height, width } = row[i];
-    createBlock(context)(color)(i * BLOCK_SIZE, index * BLOCK_SIZE, height, width);
-  }
+export const updateRow = context => (row, rowIndex) => {
+  return row.map((block, i) => {
+    const { color, x, y, height, width } = block;
+    return createBlock(context)(color)(i * BLOCK_SIZE, rowIndex * BLOCK_SIZE, height, width);
+  });
 };
