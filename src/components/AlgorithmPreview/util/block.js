@@ -1,3 +1,5 @@
+const BLOCK_SIZE = 5;
+
 const randomColor = () => {
   const randomNum = num => Math.floor(Math.random() * num);
   const hue = randomNum(360);
@@ -7,7 +9,7 @@ const randomColor = () => {
 export const createBlock = context => color => (...args) => {
   const [x, y, height, width = height] = args;
   context.fillStyle = color;
-  context.fillRect(x, y, height, width);
+  context.fillRect(x, y, width, height);
   return {
     x,
     y,
@@ -26,7 +28,7 @@ export const createRow = context => ({ width, blockSize, y = 0 }) => {
   return blocks;
 }
 
-export const createGrid = context => ({ height, width, blockSize = 2 }) => {
+export const createGrid = context => ({ height, width, blockSize = BLOCK_SIZE }) => {
   let grid = [];
   let row = 0;
   while ((row * blockSize) <= height) {
@@ -34,4 +36,11 @@ export const createGrid = context => ({ height, width, blockSize = 2 }) => {
     row += 1;
   }
   return grid;
+};
+
+export const updateRow = context => (row, index) => {
+  for (let i = 0; i < row.length; i++) {
+    const { color, x, y, height, width } = row[i];
+    createBlock(context)(color)(i * BLOCK_SIZE, index * BLOCK_SIZE, height, width);
+  }
 };

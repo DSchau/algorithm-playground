@@ -33,6 +33,7 @@
   "dependencies": {
     "acorn": "~5.2.1",
     "babel-plugin-emotion": "~8.0.10",
+    "babel-polyfill": "~6.26.0",
     "buble": "~0.16.0",
     "codemirror": "~5.31.0",
     "emotion": "~8.0.10",

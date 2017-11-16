@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'react-emotion';
 
-import { createGrid, createRow } from '../../util';
+import { createGrid, createRow, updateRow } from '../../util';
+import { delay, sortRow } from '../../../../util';
 
 const Container = styled.div`
   height: 100%;
@@ -24,13 +25,15 @@ const Canvas = styled.canvas`
 
 class CanvasComponent extends Component {
   state = {
+    context: null,
+    grid: [],
     height: 400,
     width: 250
   };
 
   componentDidMount() {
-
     this.setState({
+      context: this.canvas.getContext('2d'),
       height: this.container.clientHeight,
       width: this.container.clientWidth
     }, () => {
@@ -44,15 +47,29 @@ class CanvasComponent extends Component {
     this.grid = [];
   }
 
-  init() {
-    this.context = this.canvas.getContext('2d');
-    const grid = createGrid(this.context)({ height: this.state.height, width: this.state.width });
+  init(worker) {
+    this.setState({
+      grid: createGrid(this.state.context)({ height: this.state.height, width: this.state.width })
+    });
   }
+
+  handleClick = async () => {
+    let row = 0;
+    while (this.state.grid[row]) {
+      const sorted = await sortRow(this.state.grid[row]);
+
+      await delay();
+
+      updateRow(this.state.context)(sorted, row);
+
+      row += 1;
+    }
+  };
 
   render() {
     const { height, width } = this.state;
     return (
-      <Container innerRef={node => this.container = node}>
+      <Container innerRef={node => this.container = node} onClick={this.handleClick}>
         <Canvas
           height={height}
           width={width}
