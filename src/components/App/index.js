@@ -17,12 +17,12 @@ const Content = styled.main`
   flex: 1 1 auto;
   position: relative;
   overflow-y: auto;
-  width: 100%;
 
   display: flex;
   flex-direction: column;
   height: 100%;
   width: 100%;
+  max-width: 100%;
 
   ${LARGE`
 flex-direction: row;
@@ -43,8 +43,12 @@ export function App() {
               theme={theme}
             />
             <Content>
-              <CodeEditor algorithm={algorithm} onUpdate={actions.handleAlgorithmUpdate} theme={theme} />
-              <AlgorithmPreview algorithm={algorithm.value} />
+              <CodeEditor
+                algorithm={algorithm}
+                onUpdate={actions.handleAlgorithmUpdate}
+                theme={theme}
+              />
+              <AlgorithmPreview algorithm={algorithm.value} theme={theme.primary} />
             </Content>
             <Footer />
           </Container>
@@ -61,5 +65,6 @@ injectGlobal`
 
   body {
     overflow: hidden;
+    max-width: 100%;
   }
 `;

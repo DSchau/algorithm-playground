@@ -1,10 +1,10 @@
-import Worker from '../Worker';
+import Transpile from '../transpile.worker';
 
-const worker = new Worker();
+const worker = new Transpile();
 
 const safeEval = code => {
   return new Function(code);
-}
+};
 
 export function transpile(code) {
   return new Promise((resolve, reject) => {
@@ -17,4 +17,3 @@ export function transpile(code) {
     });
   });
 }
-
