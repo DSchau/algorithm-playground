@@ -62,58 +62,38 @@ class CanvasComponent extends Component {
         context: this.canvas.getContext('2d'),
         height: this.container.clientHeight,
         width: this.container.clientWidth
-      },
-      () => {
-        this.init();
       }
     );
   }
 
   componentWillReceiveProps({ sortFunction }) {
     if (this.props.sortFunction !== sortFunction) {
+      this.resetGrid();
       this.setState({
         inProgress: false
       });
     }
   }
 
-  init(worker) {
-    this.setState({
-      grid: createGrid(this.state.context)({
-        height: this.state.height,
-        width: this.state.width
-      })
-    });
-  }
-
-  handleClick = async () => {
-    this.setState(
-      {
+  handleClick = () => {
+    if (this.state.sorted) {
+      this.resetGrid();
+    } else {
+      this.setState({
         inProgress: true
-      },
-      async () => {
+      }, async () => {
         await this.sortGrid();
-        if (!this.state.sorted) {
-          this.setState({
-            inProgress: false,
-            sorted: true
-          });
-        } else {
-          this.setState({
-            inProgress: false,
-            grid: createGrid(this.state.context)({
-              height: this.state.height,
-              width: this.state.width
-            }),
-            sorted: false
-          });
-        }
-      }
-    );
+
+        this.setState({
+          inProgress: false,
+          sorted: true
+        });
+      });
+    }
   };
 
-  sortGrid = async () => {
-    return await pRequestAnimationFrame(async () => {
+  sortGrid() {
+    return pRequestAnimationFrame(async () => {
       return await Promise.all(
         (this.state.grid || []).map(async (row, rowIndex) => {
           const updates = await sortRow(row, this.props.sortFunction);
@@ -131,6 +111,17 @@ class CanvasComponent extends Component {
       );
     });
   };
+
+  resetGrid() {
+    this.setState({
+      inProgress: false,
+      grid: createGrid(this.state.context)({
+        height: this.state.height,
+        width: this.state.width
+      }),
+      sorted: false
+    });
+  }
 
   render() {
     const { height, width, inProgress, sorted } = this.state;

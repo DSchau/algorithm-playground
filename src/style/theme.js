@@ -17,13 +17,7 @@ const light = {
 };
 
 export const THEME = {
-  dark: {
-    ...dark,
-    textSecondary: darken(0.2, '#ddd')
-  },
-  light: {
-    ...light,
-    textSecondary: lighten(0.2, '#1E1E20')
-  },
+  dark,
+  light,
   primary: 'dark'
 };

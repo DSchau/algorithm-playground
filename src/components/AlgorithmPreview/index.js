@@ -41,13 +41,6 @@ export class AlgorithmPreview extends Component {
 
   render() {
     const { sortFunction } = this.state;
-    const apply = () => {
-      try {
-        return JSON.stringify(fn()(['red', 'green', 'blue']));
-      } catch {
-        return ``;
-      }
-    };
     return (
       <Container>
         <Canvas sortFunction={sortFunction} theme={this.props.theme} />
