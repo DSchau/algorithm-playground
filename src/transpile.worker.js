@@ -64,4 +64,4 @@ if (typeof onmessage !== 'undefined') {
   };
 }
 
-export default () => {};
+export default () => {}

@@ -1,10 +1,9 @@
-export function memoize(fn) {
-  let cache = {};
+export function memoize(fn, cache = {}) {
   return function(...args) {
     const joined = args.join(' ');
-    if (cache[joined]) {
-      return cache[joined];
+    if (!cache[joined]) {
+      cache[joined] = fn(...args);
     }
-    return (cache[joined] = fn(...args));
+    return cache[joined];
   };
 }

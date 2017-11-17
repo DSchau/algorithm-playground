@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "@babel/core": "~7.0.0-beta.31",
+    "@babel/plugin-transform-runtime": "~7.0.0-beta.32",
     "@babel/preset-env": "~7.0.0-beta.31",
     "@babel/preset-flow": "~7.0.0-beta.31",
     "@babel/preset-react": "~7.0.0-beta.31",
@@ -19,7 +20,6 @@
     "babel-7-jest": "~21.3.1",
     "babel-loader": "8.0.0-beta.0",
     "babel-plugin-polished": "~1.1.0",
-    "babel-plugin-transform-runtime": "~6.23.0",
     "compression-webpack-plugin": "~1.0.1",
     "css-loader": "~0.28.7",
     "extract-text-webpack-plugin": "~3.0.2",
@@ -40,7 +40,7 @@
   "dependencies": {
     "acorn": "~5.2.1",
     "babel-plugin-emotion": "~8.0.10",
-    "babel-polyfill": "~6.26.0",
+    "babel-runtime": "~6.26.0",
     "buble": "~0.16.0",
     "codemirror": "~5.31.0",
     "emotion": "~8.0.10",
