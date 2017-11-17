@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it has expected exports 1`] = `
+Array [
+  "FADE_IN",
+  "SCALE_IN",
+  "SCALE_OUT",
+  "SLIDE_UP",
+  "SMALL",
+  "MEDIUM",
+  "LARGE",
+  "SANS_SERIF",
+  "SERIF",
+  "THEME",
+  "Z_INDEX_BASE",
+  "Z_INDEX_PREVIEW_CONTENT",
+  "Z_INDEX_ABOVE_CONTENT",
+  "Z_INDEX_SUPER",
+]
+`;

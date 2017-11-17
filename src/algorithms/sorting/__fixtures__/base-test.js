@@ -7,12 +7,6 @@ export default function baseTestSuite(sort) {
     expect(sort([1])).toEqual([1]);
   });
 
-  test('it does not modify input array', () => {
-    const arr = [5, 4, 3, 2, 1];
-    const sorted = sort(arr);
-    expect(arr).not.toEqual(sorted);
-  });
-
   test('it sorts array of numbers', () => {
     const arr = [5, 1, 2, 4, 3, 0];
     expect(sort(arr)).toEqual(arr.sort());
