@@ -3,7 +3,15 @@ import React from 'react';
 import styled, { injectGlobal } from 'react-emotion';
 import { ThemeProvider } from 'emotion-theming';
 
-import { AlgorithmPreview, CodeEditor, Footer, Header, Offline, Provider, Timer } from '../';
+import {
+  AlgorithmPreview,
+  CodeEditor,
+  Footer,
+  Header,
+  Offline,
+  Provider,
+  Timer
+} from '../';
 
 import { LARGE } from '../../style';
 
@@ -34,7 +42,13 @@ export function App() {
     <Offline
       render={updated => (
         <Provider
-          render={({ actions, algorithm, algorithms, defaultAlgorithm, theme }) => (
+          render={({
+            actions,
+            algorithm,
+            algorithms,
+            defaultAlgorithm,
+            theme
+          }) => (
             <ThemeProvider theme={theme}>
               <Container>
                 <Header

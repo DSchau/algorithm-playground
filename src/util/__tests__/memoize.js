@@ -22,7 +22,7 @@ test('it executes function on cache miss', () => {
 
 test('it works with multiple arguments', () => {
   const spy = jest.fn();
-  let cache = {}
+  let cache = {};
   const cached = memoize(spy, cache);
 
   spy.mockReturnValueOnce(1000);

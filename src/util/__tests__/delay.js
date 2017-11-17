@@ -6,7 +6,7 @@ beforeEach(() => {
 });
 
 test('it performs an async delay', () => {
-  spy.mockReturnValueOnce(callback => callback())
+  spy.mockReturnValueOnce(callback => callback());
   delay(0);
 
   expect(spy).toHaveBeenCalledWith(expect.any(Function), 0);

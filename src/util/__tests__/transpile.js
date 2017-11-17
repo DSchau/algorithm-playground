@@ -1,5 +1,5 @@
 jest.mock('../../transpile.worker', () => {
-  return class Transpile {}
+  return class Transpile {};
 });
 
 import { transpile } from '../transpile';

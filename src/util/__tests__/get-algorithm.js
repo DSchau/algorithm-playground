@@ -1,5 +1,3 @@
 import { getAlgorithm } from '../get-algorithm';
 
-test('it does something', () => {
-
-});
+test('it does something', () => {});

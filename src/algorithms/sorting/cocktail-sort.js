@@ -23,4 +23,5 @@ export function cocktailSort(arr) {
       }
     }
   }
+  return arr;
 }
