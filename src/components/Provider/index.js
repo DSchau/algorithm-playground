@@ -37,6 +37,10 @@ export class Provider extends Component {
     });
   };
 
+  handleTimerComplete = () => {
+    window.location.reload();
+  };
+
   render() {
     const { render, children = render } = this.props;
     const { algorithm, theme } = this.state;
@@ -44,7 +48,8 @@ export class Provider extends Component {
       actions: {
         handleAlgorithmChange: this.handleAlgorithmChange,
         handleAlgorithmUpdate: this.handleAlgorithmUpdate,
-        handleThemeChange: this.handleThemeChange
+        handleThemeChange: this.handleThemeChange,
+        handleTimerComplete: this.handleTimerComplete
       },
       algorithm,
       algorithms: ALGORITHMS,

@@ -17,5 +17,5 @@ module.exports = {
       }
     ],
     'polished'
-  ]
+  ].concat(process.env.NODE_ENV === 'production' ? ['@babel/transform-runtime'] : [])
 };

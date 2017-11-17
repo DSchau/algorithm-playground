@@ -3,7 +3,7 @@ import React from 'react';
 import styled, { injectGlobal } from 'react-emotion';
 import { ThemeProvider } from 'emotion-theming';
 
-import { AlgorithmPreview, CodeEditor, Footer, Header, Provider } from '../';
+import { AlgorithmPreview, CodeEditor, Footer, Header, Offline, Provider, Timer } from '../';
 
 import { LARGE } from '../../style';
 
@@ -31,31 +31,41 @@ flex-direction: row;
 
 export function App() {
   return (
-    <Provider
-      render={({ actions, algorithm, algorithms, defaultAlgorithm, theme }) => (
-        <ThemeProvider theme={theme}>
-          <Container>
-            <Header
-              algorithms={algorithms}
-              defaultAlgorithm={defaultAlgorithm}
-              onAlgorithmChange={actions.handleAlgorithmChange}
-              onThemeChange={actions.handleThemeChange}
-              theme={theme}
-            />
-            <Content>
-              <CodeEditor
-                algorithm={algorithm}
-                onUpdate={actions.handleAlgorithmUpdate}
-                theme={theme}
-              />
-              <AlgorithmPreview
-                algorithm={algorithm.value}
-                theme={theme.primary}
-              />
-            </Content>
-            <Footer />
-          </Container>
-        </ThemeProvider>
+    <Offline
+      render={updated => (
+        <Provider
+          render={({ actions, algorithm, algorithms, defaultAlgorithm, theme }) => (
+            <ThemeProvider theme={theme}>
+              <Container>
+                <Header
+                  algorithms={algorithms}
+                  defaultAlgorithm={defaultAlgorithm}
+                  onAlgorithmChange={actions.handleAlgorithmChange}
+                  onThemeChange={actions.handleThemeChange}
+                  theme={theme}
+                />
+                <Content>
+                  <CodeEditor
+                    algorithm={algorithm}
+                    onUpdate={actions.handleAlgorithmUpdate}
+                    theme={theme}
+                  />
+                  <AlgorithmPreview
+                    algorithm={algorithm.value}
+                    theme={theme.primary}
+                  />
+                </Content>
+                <Footer />
+                {updated && (
+                  <Timer
+                    duration={10000}
+                    onElapsed={actions.handleTimerComplete}
+                  />
+                )}
+              </Container>
+            </ThemeProvider>
+          )}
+        />
       )}
     />
   );

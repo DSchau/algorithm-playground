@@ -10,7 +10,7 @@ import {
   updateRowAtPosition
 } from '../../util';
 import { delay, pRequestAnimationFrame, sortRow } from '../../../../util';
-import { ScaleIn } from '../../../../style';
+import { SCALE_IN } from '../../../../style';
 
 const Container = styled.div`
   height: 100%;
@@ -43,7 +43,7 @@ const StyledIcon = component => styled(component)`
   font-size: 120px;
   color: ${({ theme }) => theme[theme.primary].base};
 
-  animation: ${ScaleIn} 0.3s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  animation: ${SCALE_IN} 0.3s cubic-bezier(0.39, 0.575, 0.565, 1) both;
 `;
 
 class CanvasComponent extends Component {
