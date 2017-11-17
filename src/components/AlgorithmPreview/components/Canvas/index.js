@@ -3,8 +3,13 @@ import styled from 'react-emotion';
 import Play from 'react-icons/lib/md/play-arrow';
 import Replay from 'react-icons/lib/md/replay';
 
-import { createGrid, createRow, updateRow, updateRowAtPosition } from '../../util';
-import { delay, sortRow } from '../../../../util';
+import {
+  createGrid,
+  createRow,
+  updateRow,
+  updateRowAtPosition
+} from '../../util';
+import { delay, pRequestAnimationFrame, sortRow } from '../../../../util';
 import { ScaleIn } from '../../../../style';
 
 const Container = styled.div`
@@ -38,7 +43,7 @@ const StyledIcon = component => styled(component)`
   font-size: 120px;
   color: ${({ theme }) => theme[theme.primary].base};
 
-  animation: ${ScaleIn} 0.3s cubic-bezier(.39, .575, .565, 1) both;
+  animation: ${ScaleIn} 0.3s cubic-bezier(0.39, 0.575, 0.565, 1) both;
 `;
 
 class CanvasComponent extends Component {
@@ -52,73 +57,78 @@ class CanvasComponent extends Component {
   };
 
   componentDidMount() {
-    this.setState({
-      context: this.canvas.getContext('2d'),
-      height: this.container.clientHeight,
-      width: this.container.clientWidth
-    }, () => {
-      this.init();
-    });
+    this.setState(
+      {
+        context: this.canvas.getContext('2d'),
+        height: this.container.clientHeight,
+        width: this.container.clientWidth
+      },
+      () => {
+        this.init();
+      }
+    );
+  }
+
+  componentWillReceiveProps({ sortFunction }) {
+    if (this.props.sortFunction !== sortFunction) {
+      this.setState({
+        inProgress: false
+      });
+    }
   }
 
   init(worker) {
     this.setState({
-      grid: createGrid(this.state.context)({ height: this.state.height, width: this.state.width })
+      grid: createGrid(this.state.context)({
+        height: this.state.height,
+        width: this.state.width
+      })
     });
   }
 
   handleClick = async () => {
-    this.setState({
-      inProgress: true
-    }, async () => {
-      if (!this.state.sorted) {
-        await Promise.all((this.state.grid || []).map(async (row, rowIndex) => {
-          const updates = await sortRow(row);
+    this.setState(
+      {
+        inProgress: true
+      },
+      async () => {
+        await this.sortGrid();
+        if (!this.state.sorted) {
+          this.setState({
+            inProgress: false,
+            sorted: true
+          });
+        } else {
+          this.setState({
+            inProgress: false,
+            grid: createGrid(this.state.context)({
+              height: this.state.height,
+              width: this.state.width
+            }),
+            sorted: false
+          });
+        }
+      }
+    );
+  };
+
+  sortGrid = async () => {
+    return await pRequestAnimationFrame(async () => {
+      return await Promise.all(
+        (this.state.grid || []).map(async (row, rowIndex) => {
+          const updates = await sortRow(row, this.props.sortFunction);
 
           let updateIndex = 0;
           while (updateIndex < updates.length) {
             const [index, block] = updates[updateIndex];
             updateRowAtPosition(this.state.context)(rowIndex, index, block);
-            await delay(1);
+            await delay(0);
             updateIndex += 1;
           }
 
           return updates;
-        }));
-
-
-        // const [row, secondRow] = this.state.grid;
-        // const updates = await sortRow(row);
-        // let changeIndex = 0;
-        // while (changeIndex < updates.length) {
-        //   const [index, block] = updates[changeIndex];
-        //   updateRowAtPosition(this.state.context)(0, index, block);
-        //   await delay(1);
-        //   changeIndex += 1;
-        // }
-        // await Promise.all(this.state.grid.map(async (row, rowIndex) => {
-        //   const updates = await sortRow(row);
-        //   let changeIndex = 0;
-        //   while (changeIndex < updates.length) {
-        //     const [index, block] = updates[changeIndex];
-        //     updateRowAtPosition(this.state.context)(rowIndex, index, block);
-        //     await delay(1);
-        //     changeIndex += 1;
-        //   }
-        //   return row;
-        // }));
-
-        this.setState({
-          inProgress: false,
-          sorted: true
-        });
-      } else {
-        this.setState({
-          inProgress: false,
-          grid: createGrid(this.state.context)({ height: this.state.height, width: this.state.width }),
-          sorted: false
-        });
-      }
+        })
+      );
     });
   };
 
@@ -126,7 +136,10 @@ class CanvasComponent extends Component {
     const { height, width, inProgress, sorted } = this.state;
     const Icon = StyledIcon(sorted ? Replay : Play);
     return (
-      <Container innerRef={node => this.container = node} onClick={this.handleClick}>
+      <Container
+        innerRef={node => (this.container = node)}
+        onClick={this.handleClick}
+      >
         <Canvas
           height={height}
           width={width}
@@ -134,7 +147,7 @@ class CanvasComponent extends Component {
             height,
             width
           }}
-          innerRef={node => this.canvas = node}
+          innerRef={node => (this.canvas = node)}
         />
         {!inProgress && <Icon />}
       </Container>
@@ -142,4 +155,4 @@ class CanvasComponent extends Component {
   }
 }
 
-export { CanvasComponent as Canvas }
+export { CanvasComponent as Canvas };

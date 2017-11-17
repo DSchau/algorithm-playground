@@ -42,6 +42,7 @@
     "normalize.css": "~7.0.0",
     "polished": "~1.9.0",
     "proxy-polyfill": "~0.1.7",
+    "query-string": "~5.0.1",
     "react": "~16.0.0",
     "react-dom": "~16.0.0",
     "react-emotion": "~8.0.10",

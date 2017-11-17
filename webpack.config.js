@@ -19,9 +19,7 @@ module.exports = ({ env }) => ({
           path.join(__dirname, 'src/algorithms/index')
         ],
         use: ['babel-loader'],
-        exclude: [
-          /\.worker.js$/
-        ]
+        exclude: [/\.worker.js$/]
       },
       {
         test: /\.worker\.js$/,

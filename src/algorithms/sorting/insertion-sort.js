@@ -8,15 +8,14 @@ export function insertionSort(arr) {
   if (!arr || !arr.length) {
     return arr;
   }
-  let cloned = arr.slice(0);
-  for (let i = 1; i < cloned.length; i++) {
-    let value = cloned[i];
+  for (let i = 1; i < arr.length; i++) {
+    let value = arr[i];
     let j = i - 1;
-    while (j >= 0 && cloned[j] > value) {
-      cloned[j + 1] = cloned[j];
+    while (j >= 0 && arr[j] > value) {
+      arr[j + 1] = arr[j];
       j -= 1;
     }
-    cloned[j + 1] = value;
+    arr[j + 1] = value;
   }
-  return cloned;
+  return arr;
 }
