@@ -3,7 +3,7 @@ import styled from 'react-emotion';
 import DownIconElement from 'react-icons/lib/md/arrow-drop-down';
 
 import { capitalize } from '../../util';
-import { SANS_SERIF } from '../../style';
+import { SANS_SERIF, Z_INDEX_PREVIEW_CONTENT } from '../../style';
 
 const SelectContainer = styled.div`
   display: flex;
@@ -12,7 +12,7 @@ const SelectContainer = styled.div`
 `;
 
 const Select = styled.select`
-  height: 32;
+  height: 32px;
   background-color: transparent;
   color: ${({ theme }) => theme[theme.primary].text};
   font-family: ${SANS_SERIF};
@@ -22,7 +22,19 @@ const Select = styled.select`
   font-size: 1.3rem;
   padding-right: 1.3rem;
   outline: none;
-  zindex: 2;
+  zindex: ${Z_INDEX_PREVIEW_CONTENT};
+
+  &:focus {
+    box-shadow: 0 0 5px ${({ theme }) => theme[theme.primary].accent};
+  }
+`;
+
+const Optgroup = styled.optgroup`
+  color: black;
+`;
+
+const Option = styled.option`
+  color: black;
 `;
 
 const DownIcon = styled(DownIconElement)`
@@ -66,14 +78,14 @@ export class Selector extends Component {
             if (Array.isArray(item)) {
               const [{ group }] = item;
               return (
-                <optgroup key={group} label={group}>
+                <Optgroup key={group} label={group}>
                   {item.map(nestedItem => (
-                    <option key={nestedItem.label}>{nestedItem.label}</option>
+                    <Option key={nestedItem.label}>{nestedItem.label}</Option>
                   ))}
-                </optgroup>
+                </Optgroup>
               );
             }
-            return <option key={item.label}>{item.label}</option>;
+            return <Option key={item.label}>{item.label}</Option>;
           })}
         </Select>
         <DownIcon />

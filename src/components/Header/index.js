@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'react-emotion';
 import InvertedIcon from 'react-icons/lib/go/light-bulb';
 
-import { Selector } from '..';
+import { Accessible, Selector } from '..';
 
 const Header = styled.header`
   flex: 0 0 auto;
@@ -36,10 +36,14 @@ function HeaderComponent({
         items={algorithms}
         onAlgorithmChange={onAlgorithmChange}
       />
-      <LightbulbIcon
+      <Accessible
+        aria-label={`Toggle ${
+          theme.primary === 'dark' ? 'light' : 'dark'
+        } mode`}
         onClick={() =>
           onThemeChange(theme.primary === 'dark' ? 'light' : 'dark')
         }
+        render={() => <LightbulbIcon />}
       />
     </Header>
   );

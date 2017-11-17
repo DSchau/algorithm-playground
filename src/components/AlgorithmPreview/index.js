@@ -19,7 +19,7 @@ export class AlgorithmPreview extends Component {
     super(props);
 
     this.state = {
-      fn: () => {}
+      sortFunction: ``
     };
   }
 
@@ -34,23 +34,16 @@ export class AlgorithmPreview extends Component {
   transformCode = code => {
     return transpile(code).then(transformed => {
       this.setState({
-        fn: transformed
+        sortFunction: transformed
       });
     });
   };
 
   render() {
-    const { fn } = this.state;
-    const apply = () => {
-      try {
-        return JSON.stringify(fn()(['red', 'green', 'blue']));
-      } catch {
-        return ``;
-      }
-    };
+    const { sortFunction } = this.state;
     return (
       <Container>
-        <Canvas theme={this.props.theme} />
+        <Canvas sortFunction={sortFunction} theme={this.props.theme} />
       </Container>
     );
   }

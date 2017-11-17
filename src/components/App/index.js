@@ -48,7 +48,10 @@ export function App() {
                 onUpdate={actions.handleAlgorithmUpdate}
                 theme={theme}
               />
-              <AlgorithmPreview algorithm={algorithm.value} theme={theme.primary} />
+              <AlgorithmPreview
+                algorithm={algorithm.value}
+                theme={theme.primary}
+              />
             </Content>
             <Footer />
           </Container>
