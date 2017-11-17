@@ -1,4 +1,4 @@
-import React, { Component }  from 'react';
+import React, { Component } from 'react';
 import styled, { css } from 'react-emotion';
 import { darken } from 'polished';
 
@@ -13,7 +13,7 @@ const Container = styled.div`
   margin: 0 auto;
   box-sizing: border-box;
   border: 1px solid transparent;
-  animation: ${SLIDE_UP} 325ms cubic-bezier(0.390, 0.575, 0.565, 1.000);
+  animation: ${SLIDE_UP} 325ms cubic-bezier(0.39, 0.575, 0.565, 1);
   z-index: ${Z_INDEX_SUPER};
   font-family: ${SANS_SERIF};
 

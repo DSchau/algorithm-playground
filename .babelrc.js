@@ -7,7 +7,7 @@ module.exports = {
       {
         modules: is('test') ? 'commonjs' : false,
         targets: {
-          'node': 'current'
+          node: 'current'
         }
       }
     ],

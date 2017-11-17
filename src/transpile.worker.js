@@ -42,6 +42,7 @@ const transformLastExportToReturn = code => {
   );
   const statement = defaultExport || lastExport;
   return code.replace(statement, 'return ');
+  // return code.replace(statement, '(').trim() + ')';
 };
 
 if (typeof onmessage !== 'undefined') {
@@ -57,6 +58,7 @@ if (typeof onmessage !== 'undefined') {
         sourcemap: false
       });
       const exportedFn = transformLastExportToReturn(transformed);
+      console.log(exportedFn);
       postMessage(exportedFn);
     } catch (e) {
       console.warn(e);
@@ -64,4 +66,4 @@ if (typeof onmessage !== 'undefined') {
   };
 }
 
-export default () => {}
+export default () => {};

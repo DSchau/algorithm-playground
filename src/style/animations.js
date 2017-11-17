@@ -34,4 +34,4 @@ export const SLIDE_UP = keyframes`
   to {
     bottom: 7.5%;
   }
-`
+`;

@@ -1,35 +1,40 @@
-function swap(arr, i, j) {
-  var temp = arr[i];
-  arr[i] = arr[j];
-  arr[j] = temp;
-}
+// http://learnjswith.me/quick-sort-in-javascript/
+function partition(items, left, right) {
+  // create pivot as middle value
+  const pivot = items[Math.floor((right + left) / 2)];
 
-function partition(arr, pivot, left, right) {
-  var pivotValue = arr[pivot],
-    partitionIndex = left;
+  let i = left; // start left and go right towards pivot
+  let j = right; // start right and go left towards pivot
 
-  for (var i = left; i < right; i++) {
-    if (arr[i] < pivotValue) {
-      swap(arr, i, partitionIndex);
-      partitionIndex++;
+  while (i <= j) {
+    while (items[i] < pivot) {
+      i++;
+    }
+    while (items[j] > pivot) {
+      j--;
+    }
+    if (i <= j) {
+      // swap values using destructuring
+      [items[i], items[j]] = [items[j], items[i]];
+      i++;
+      j--;
     }
   }
-  swap(arr, right, partitionIndex);
-  return partitionIndex;
+  return i;
 }
 
-export function quickSort(arr, left, right) {
-  var len = arr.length,
-    pivot,
-    partitionIndex;
+export function quickSort(items, left = 0, right = items.length - 1) {
+  let index;
+  if (items.length > 1) {
+    // create the partition (split the array)
+    index = partition(items, left, right);
 
-  if (left < right) {
-    pivot = right;
-    partitionIndex = partition(arr, pivot, left, right);
-
-    //sort left and right
-    quickSort(arr, left, partitionIndex - 1);
-    quickSort(arr, partitionIndex + 1, right);
+    if (left < index - 1) {
+      quickSort(items, left, index - 1);
+    }
+    if (index < right) {
+      quickSort(items, index, right);
+    }
   }
-  return arr;
+  return items;
 }

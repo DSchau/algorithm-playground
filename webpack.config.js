@@ -24,10 +24,7 @@ module.exports = function webpackConfig({ environment } = {}) {
             path.join(__dirname, 'src/algorithms/index')
           ],
           use: ['babel-loader'],
-          exclude: [
-            /\.worker.js$/,
-            'proxy-polyfill'
-          ]
+          exclude: [/\.worker.js$/, 'proxy-polyfill']
         },
         {
           test: /\.worker\.js$/,
