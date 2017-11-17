@@ -1,4 +1,5 @@
 export * from './AlgorithmPreview';
+export * from './Accessible';
 export * from './App';
 export * from './CodeEditor';
 export * from './Footer';

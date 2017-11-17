@@ -57,13 +57,11 @@ class CanvasComponent extends Component {
   };
 
   componentDidMount() {
-    this.setState(
-      {
-        context: this.canvas.getContext('2d'),
-        height: this.container.clientHeight,
-        width: this.container.clientWidth
-      }
-    );
+    this.setState({
+      context: this.canvas.getContext('2d'),
+      height: this.container.clientHeight,
+      width: this.container.clientWidth
+    });
   }
 
   componentWillReceiveProps({ sortFunction }) {
@@ -79,16 +77,19 @@ class CanvasComponent extends Component {
     if (this.state.sorted) {
       this.resetGrid();
     } else {
-      this.setState({
-        inProgress: true
-      }, async () => {
-        await this.sortGrid();
+      this.setState(
+        {
+          inProgress: true
+        },
+        async () => {
+          await this.sortGrid();
 
-        this.setState({
-          inProgress: false,
-          sorted: true
-        });
-      });
+          this.setState({
+            inProgress: false,
+            sorted: true
+          });
+        }
+      );
     }
   };
 
@@ -110,7 +111,7 @@ class CanvasComponent extends Component {
         })
       );
     });
-  };
+  }
 
   resetGrid() {
     this.setState({
