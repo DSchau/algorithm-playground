@@ -1,6 +1,6 @@
 import { memoize } from '../../../util';
 
-const BLOCK_SIZE = 10;
+const BLOCK_SIZE = Math.ceil(Math.log10(window.innerWidth)) * 3;
 const SATURATION = 100;
 const LIGHTNESS = 50;
 
@@ -15,7 +15,7 @@ const randomColor = () => {
   return getColorFromHue(hue);
 };
 
-const colorCache = memoize(numColors =>
+const rowColors = memoize(numColors =>
   new Array(numColors).fill(undefined).map(() => randomColor())
 );
 
@@ -30,7 +30,7 @@ export const createBlock = context => color => (...args) => {
 export const createRow = context => ({ width, blockSize, y = 0 }) => {
   let blocks = [];
   const numBlocks = Math.ceil(width / blockSize);
-  const colors = colorCache(numBlocks + 1).slice(0);
+  const colors = rowColors(numBlocks + 1).slice(0);
   for (let i = 0; i < numBlocks; i++) {
     const color = colors
       .splice(Math.floor(Math.random() * colors.length), 1)

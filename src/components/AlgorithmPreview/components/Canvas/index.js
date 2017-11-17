@@ -5,8 +5,6 @@ import Replay from 'react-icons/lib/md/replay';
 
 import {
   createGrid,
-  createRow,
-  updateRow,
   updateRowAtPosition
 } from '../../util';
 import { delay, pRequestAnimationFrame, sortRow } from '../../../../util';
@@ -103,7 +101,7 @@ class CanvasComponent extends Component {
           while (updateIndex < updates.length) {
             const [index, block] = updates[updateIndex];
             updateRowAtPosition(this.state.context)(rowIndex, index, block);
-            await delay(0);
+            await delay(10);
             updateIndex += 1;
           }
 
