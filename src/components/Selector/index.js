@@ -65,9 +65,11 @@ export class Selector extends Component {
           return nested;
         }, []);
 
+    const value = options.find(({ label }) => label === defaultValue.label);
+
     return (
       <SelectContainer>
-        <Select defaultValue={defaultValue} onChange={this.handleOnChange}>
+        <Select defaultValue={value} onChange={this.handleOnChange}>
           {options.map(item => {
             if (Array.isArray(item)) {
               const [{ group }] = item;

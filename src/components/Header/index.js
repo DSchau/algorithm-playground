@@ -23,8 +23,8 @@ const LightbulbIcon = styled(InvertedIcon)`
 `;
 
 function HeaderComponent({
-  algorithms,
   defaultAlgorithm,
+  algorithms,
   onAlgorithmChange,
   onThemeChange,
   theme

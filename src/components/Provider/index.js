@@ -1,21 +1,47 @@
 import React, { Component } from 'react';
+import queryString from 'query-string';
+import createHistory from 'history/createBrowserHistory';
 import ALGORITHMS from '../../algorithms';
 
-import { getAlgorithm } from '../../util';
+import { capitalize, getAlgorithm } from '../../util';
 import { THEME } from '../../style';
 
 export class Provider extends Component {
-  state = {
-    algorithm: {
+  constructor(props) {
+    super(props);
+
+    const query = queryString.parse(location.search);
+    const { algorithm } = query;
+
+    const defaultAlgorithm = ALGORITHMS[algorithm] ? {
+      label: capitalize(algorithm),
+      value: ALGORITHMS[algorithm]
+    } : {
       label: 'Quick Sort',
       value: ALGORITHMS.quickSort
-    },
-    theme: THEME
-  };
+    };
 
-  handleAlgorithmChange = algorithm => {
+    this.state = {
+      defaultAlgorithm,
+      algorithm: defaultAlgorithm,
+      history: createHistory(),
+      query,
+      theme: THEME
+    };
+  }
+
+  handleAlgorithmChange = algorithmName => {
+    const { history } = this.state;
+    const algorithm = getAlgorithm(algorithmName, ALGORITHMS);
+    const query = {
+      algorithm: algorithm.label
+    };
+    history.replace({
+      search: queryString.stringify(query)
+    });
     this.setState({
-      algorithm: getAlgorithm(algorithm, ALGORITHMS)
+      algorithm,
+      query
     });
   };
 
@@ -43,7 +69,6 @@ export class Provider extends Component {
 
   render() {
     const { render, children = render } = this.props;
-    const { algorithm, theme } = this.state;
     return children({
       actions: {
         handleAlgorithmChange: this.handleAlgorithmChange,
@@ -51,10 +76,8 @@ export class Provider extends Component {
         handleThemeChange: this.handleThemeChange,
         handleTimerComplete: this.handleTimerComplete
       },
-      algorithm,
       algorithms: ALGORITHMS,
-      defaultAlgorithm: 'Quick Sort',
-      theme
+      ...this.state
     });
   }
 }

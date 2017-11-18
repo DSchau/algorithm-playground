@@ -47,13 +47,14 @@ export function App() {
             algorithm,
             algorithms,
             defaultAlgorithm,
+            query,
             theme
           }) => (
             <ThemeProvider theme={theme}>
               <Container>
                 <Header
+                  defaultAlgorithm={algorithm}
                   algorithms={algorithms}
-                  defaultAlgorithm={defaultAlgorithm}
                   onAlgorithmChange={actions.handleAlgorithmChange}
                   onThemeChange={actions.handleThemeChange}
                   theme={theme}

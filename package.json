@@ -45,6 +45,7 @@
     "codemirror": "~5.31.0",
     "emotion": "~8.0.10",
     "emotion-theming": "~8.0.10",
+    "history": "~4.7.2",
     "lodash.camelcase": "~4.3.0",
     "lodash.debounce": "~4.0.8",
     "normalize.css": "~7.0.0",
