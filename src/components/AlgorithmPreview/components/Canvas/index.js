@@ -4,10 +4,7 @@ import debounce from 'lodash.debounce';
 import Play from 'react-icons/lib/md/play-arrow';
 import Replay from 'react-icons/lib/md/replay';
 
-import {
-  createGrid,
-  updateRowAtPosition
-} from '../../util';
+import { createGrid, updateRowAtPosition } from '../../util';
 import { delay, pRequestAnimationFrame, sortRow } from '../../../../util';
 import { SCALE_IN } from '../../../../style';
 
@@ -76,7 +73,7 @@ class CanvasComponent extends Component {
   }
 
   componentWillReceiveProps({ sortFunction }) {
-    if (this.props.sortFunction !== sortFunction) {
+    if (!this.props.sortFunction || this.props.sortFunction !== sortFunction && this.state.sorted) {
       this.resetGrid();
       this.setState({
         inProgress: false
@@ -105,11 +102,14 @@ class CanvasComponent extends Component {
   };
 
   handleResize = () => {
-    this.setState({
-      height: this.container.clientHeight,
-      width: this.container.clientWidth
-    }, () => this.resetGrid());
-  }
+    this.setState(
+      {
+        height: this.container.clientHeight,
+        width: this.container.clientWidth
+      },
+      () => this.resetGrid()
+    );
+  };
 
   sortGrid() {
     return pRequestAnimationFrame(async () => {

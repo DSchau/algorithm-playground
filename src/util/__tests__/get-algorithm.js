@@ -15,5 +15,7 @@ test('it returns an algorithm, if found', () => {
 
 test('it returns fallback, if not found', () => {
   const fallback = { label: 'sup', value: 'neat' };
-  expect(getAlgorithm('I am not able to be found', algorithms, fallback)).toEqual(fallback);
+  expect(
+    getAlgorithm('I am not able to be found', algorithms, fallback)
+  ).toEqual(fallback);
 });

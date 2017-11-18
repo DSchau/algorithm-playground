@@ -9,7 +9,7 @@ const keys = req.keys().filter(key => !exclude.some(expr => expr.test(key)));
 
 keys.forEach(key => {
   const [name] = key.replace('./', '').split('.');
-  algorithms[camelCase(name.replace(/\..+/, ''))] = req(key)
+  algorithms[camelCase(name.replace(/\..+/, ''))] = req(key);
 });
 
 export default algorithms;

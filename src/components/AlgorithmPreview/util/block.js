@@ -67,7 +67,11 @@ export const updateRow = context => (row, rowIndex) => {
 };
 
 export const updateRowAtPosition = context => ({
-  rowIndex, blockIndex, hue, width, blockSize = BLOCK_SIZE(width)
+  rowIndex,
+  blockIndex,
+  hue,
+  width,
+  blockSize = BLOCK_SIZE(width)
 }) => {
   return createBlock(context)(getColorFromHue(hue))(
     blockIndex * blockSize,

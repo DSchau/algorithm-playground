@@ -22,7 +22,9 @@ if (typeof onmessage !== 'undefined') {
 
     let changes = [];
 
-    const observableArr = observable(row, arr => changes.push(arr));
+    const updateChanges = update => changes.push(update);
+
+    const observableArr = observable(row, updateChanges);
 
     const sorted = sortFunction(observableArr);
 
