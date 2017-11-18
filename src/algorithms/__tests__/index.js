@@ -2,8 +2,12 @@ import fs from 'fs';
 import path from 'path';
 import camelCase from 'lodash.camelcase';
 
+const EXCLUDE = [/^__/, /^\./, /index\.js/];
+
 const base = path.join(__dirname, '..');
-const files = fs.readdirSync(base).filter(file => !/^__/.test(file));
+const files = fs
+  .readdirSync(base)
+  .filter(file => !EXCLUDE.some(expr => expr.test(file)));
 
 const algorithms = files.map(file => {
   const [name] = file.split('.');

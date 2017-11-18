@@ -1,21 +1,21 @@
 // http://learnjswith.me/quick-sort-in-javascript/
-function partition(items, left, right) {
+function partition(arr, left, right) {
   // create pivot as middle value
-  const pivot = items[Math.floor((right + left) / 2)];
+  const pivot = arr[Math.floor((right + left) / 2)];
 
   let i = left; // start left and go right towards pivot
   let j = right; // start right and go left towards pivot
 
   while (i <= j) {
-    while (items[i] < pivot) {
+    while (arr[i] < pivot) {
       i++;
     }
-    while (items[j] > pivot) {
+    while (arr[j] > pivot) {
       j--;
     }
     if (i <= j) {
       // swap values using destructuring
-      [items[i], items[j]] = [items[j], items[i]];
+      [arr[i], arr[j]] = [arr[j], arr[i]];
       i++;
       j--;
     }
@@ -23,18 +23,18 @@ function partition(items, left, right) {
   return i;
 }
 
-export function quickSort(items, left = 0, right = items.length - 1) {
+export function quickSort(arr, left = 0, right = arr.length - 1) {
   let index;
-  if (items.length > 1) {
+  if (arr.length > 1) {
     // create the partition (split the array)
-    index = partition(items, left, right);
+    index = partition(arr, left, right);
 
     if (left < index - 1) {
-      quickSort(items, left, index - 1);
+      quickSort(arr, left, index - 1);
     }
     if (index < right) {
-      quickSort(items, index, right);
+      quickSort(arr, index, right);
     }
   }
-  return items;
+  return arr;
 }

@@ -8,7 +8,7 @@ export class Provider extends Component {
   state = {
     algorithm: {
       label: 'Quick Sort',
-      value: ALGORITHMS.sorting.quickSort
+      value: ALGORITHMS.quickSort
     },
     theme: THEME
   };
@@ -20,12 +20,12 @@ export class Provider extends Component {
   };
 
   handleAlgorithmUpdate = value => {
-    // this.setState({
-    //   algorithm: {
-    //     ...this.state.algorithm,
-    //     value: code
-    //   }
-    // });
+    this.setState({
+      algorithm: {
+        ...this.state.algorithm,
+        value
+      }
+    });
   };
 
   handleThemeChange = primary => {

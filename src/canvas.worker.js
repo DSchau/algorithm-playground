@@ -4,10 +4,6 @@ const observable = (arr, callback) =>
     apply: function(target, thisArg, argumentsList) {
       return thisArg[target].apply(this, argumentList);
     },
-    deleteProperty: function(target, property) {
-      console.log('Deleted %s', property);
-      return true;
-    },
     set: function(target, index, value, receiver) {
       target[index] = value;
       callback([parseInt(index, 10), value]);
@@ -26,7 +22,9 @@ if (typeof onmessage !== 'undefined') {
 
     let changes = [];
 
-    const observableArr = observable(row, arr => changes.push(arr));
+    const updateChanges = update => changes.push(update);
+
+    const observableArr = observable(row, updateChanges);
 
     const sorted = sortFunction(observableArr);
 

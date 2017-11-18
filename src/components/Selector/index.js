@@ -57,17 +57,11 @@ export class Selector extends Component {
 
     const options = Array.isArray(items)
       ? items
-      : Object.keys(items).reduce((nested, group) => {
-          const value = items[group];
-          nested.push(
-            Object.keys(value).reduce((arr, nestedKey) => {
-              arr.push({
-                group: capitalize(group),
-                label: capitalize(nestedKey)
-              });
-              return arr;
-            }, [])
-          );
+      : Object.keys(items).reduce((nested, name) => {
+          nested.push({
+            key: name,
+            label: capitalize(name)
+          });
           return nested;
         }, []);
 
@@ -85,7 +79,7 @@ export class Selector extends Component {
                 </Optgroup>
               );
             }
-            return <Option key={item.label}>{item.label}</Option>;
+            return <Option key={item.key}>{item.label}</Option>;
           })}
         </Select>
         <DownIcon />

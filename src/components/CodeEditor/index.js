@@ -53,11 +53,16 @@ export const CodeEditor = class extends Component {
 
   updateTextarea({ algorithm }) {
     const { value } = algorithm;
-    this.editor.setValue(value);
+    if (value && value !== this.editor.getValue()) {
+      this.editor.setValue(value);
+    }
   }
 
   handleChange = ev => {
-    this.props.onUpdate(ev.getValue());
+    const value = ev.getValue();
+    if (value !== this.props.algorithm.value) {
+      this.props.onUpdate(ev.getValue());
+    }
   };
 
   render() {

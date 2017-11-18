@@ -1,11 +1,14 @@
 const is = env => process.env.NODE_ENV === env;
 
+const TEST = is('test');
+const PRODUCTION = is('production');
+
 module.exports = {
   presets: [
     [
       '@babel/env',
       {
-        modules: is('test') ? 'commonjs' : false,
+        modules: TEST ? 'commonjs' : false,
         targets: {
           node: 'current'
         }
@@ -19,10 +22,10 @@ module.exports = {
     [
       'emotion',
       {
-        extractStatic: is('production'),
-        sourceMap: is('production')
+        extractStatic: PRODUCTION,
+        sourceMap: PRODUCTION
       }
     ],
     'polished'
-  ].concat(is('production') ? ['@babel/transform-runtime'] : [])
+  ].concat(PRODUCTION ? ['@babel/transform-runtime'] : [])
 };

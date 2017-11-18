@@ -58,7 +58,6 @@ if (typeof onmessage !== 'undefined') {
         sourcemap: false
       });
       const exportedFn = transformLastExportToReturn(transformed);
-      console.log(exportedFn);
       postMessage(exportedFn);
     } catch (e) {
       console.warn(e);
