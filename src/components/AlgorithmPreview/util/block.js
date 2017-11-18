@@ -1,6 +1,6 @@
 import { memoize } from '../../../util';
 
-const BLOCK_SIZE = Math.ceil(Math.log10(window.innerWidth)) * 3;
+const BLOCK_SIZE = width => Math.ceil(Math.log10(width)) * 4;
 const SATURATION = 100;
 const LIGHTNESS = 50;
 
@@ -43,7 +43,7 @@ export const createRow = context => ({ width, blockSize, y = 0 }) => {
 export const createGrid = context => ({
   height,
   width,
-  blockSize = BLOCK_SIZE
+  blockSize = BLOCK_SIZE(width)
 }) => {
   let grid = [];
   let row = 0;
@@ -56,21 +56,23 @@ export const createGrid = context => ({
 
 export const updateRow = context => (row, rowIndex) => {
   return row.map((block, i) => {
-    const { color, x, y, height, width } = block;
+    const { color, x, y, height, width, blockSize = BLOCK_SIZE(width) } = block;
     return createBlock(context)(color)(
-      i * BLOCK_SIZE,
-      rowIndex * BLOCK_SIZE,
+      i * blockSize,
+      rowIndex * blockSize,
       height,
       width
     );
   });
 };
 
-export const updateRowAtPosition = context => (rowIndex, blockIndex, hue) => {
+export const updateRowAtPosition = context => ({
+  rowIndex, blockIndex, hue, width, blockSize = BLOCK_SIZE(width)
+}) => {
   return createBlock(context)(getColorFromHue(hue))(
-    blockIndex * BLOCK_SIZE,
-    rowIndex * BLOCK_SIZE,
-    BLOCK_SIZE,
-    BLOCK_SIZE
+    blockIndex * blockSize,
+    rowIndex * blockSize,
+    blockSize,
+    blockSize
   );
 };

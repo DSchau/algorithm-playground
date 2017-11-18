@@ -8,11 +8,8 @@ const req = require.context('.', true, /\.js$/);
 const keys = req.keys().filter(key => !exclude.some(expr => expr.test(key)));
 
 keys.forEach(key => {
-  const [folder, name] = key.replace('./', '').split('/');
-  algorithms[folder] = {
-    ...(algorithms[folder] || {}),
-    [camelCase(name.replace(/\..+/, ''))]: req(key)
-  };
+  const [name] = key.replace('./', '').split('.');
+  algorithms[camelCase(name.replace(/\..+/, ''))] = req(key)
 });
 
 export default algorithms;

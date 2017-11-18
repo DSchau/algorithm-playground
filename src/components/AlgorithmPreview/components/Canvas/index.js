@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'react-emotion';
+import debounce from 'lodash.debounce';
 import Play from 'react-icons/lib/md/play-arrow';
 import Replay from 'react-icons/lib/md/replay';
 
@@ -45,14 +46,20 @@ const StyledIcon = component => styled(component)`
 `;
 
 class CanvasComponent extends Component {
-  state = {
-    context: null,
-    grid: [],
-    height: 400,
-    width: 250,
-    inProgress: false,
-    sorted: false
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      context: null,
+      grid: [],
+      height: 400,
+      width: 250,
+      inProgress: false,
+      sorted: false
+    };
+
+    this.handleResize = debounce(this.handleResize, 50);
+  }
 
   componentDidMount() {
     this.setState({
@@ -60,6 +67,12 @@ class CanvasComponent extends Component {
       height: this.container.clientHeight,
       width: this.container.clientWidth
     });
+
+    window.addEventListener('resize', this.handleResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize);
   }
 
   componentWillReceiveProps({ sortFunction }) {
@@ -91,6 +104,13 @@ class CanvasComponent extends Component {
     }
   };
 
+  handleResize = () => {
+    this.setState({
+      height: this.container.clientHeight,
+      width: this.container.clientWidth
+    }, () => this.resetGrid());
+  }
+
   sortGrid() {
     return pRequestAnimationFrame(async () => {
       return await Promise.all(
@@ -99,9 +119,14 @@ class CanvasComponent extends Component {
 
           let updateIndex = 0;
           while (updateIndex < updates.length) {
-            const [index, block] = updates[updateIndex];
-            updateRowAtPosition(this.state.context)(rowIndex, index, block);
-            await delay(10);
+            const [blockIndex, hue] = updates[updateIndex];
+            updateRowAtPosition(this.state.context)({
+              rowIndex,
+              blockIndex,
+              width: this.state.width,
+              hue
+            });
+            await delay(0);
             updateIndex += 1;
           }
 
