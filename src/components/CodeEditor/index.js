@@ -43,7 +43,7 @@ export const CodeEditor = class extends Component {
         theme.primary === 'dark' ? 'dracula' : 'default'
       );
     }
-    this.updateTextarea(props);
+    this.updateTextarea(props, this.props.algorithm.key);
   }
 
   componentWillUnmount() {
@@ -61,7 +61,7 @@ export const CodeEditor = class extends Component {
   handleChange = ev => {
     const value = ev.getValue();
     if (value !== this.props.algorithm.value) {
-      this.props.onUpdate(ev.getValue());
+      this.props.onUpdate(ev.getValue(), );
     }
   };
 
@@ -86,5 +86,13 @@ injectGlobal`
     left: 0;
     font-family: "Operator Mono SSm A", "Operator Mono SSm B", monospace;
     font-size: 12px;
+
+    /* iOS 11+ */
+    padding-left: constant(safe-area-inset-left);
+    padding-right: constant(safe-area-inset-right);
+    
+    /* iOS 11.2+ */
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
   }
 `;

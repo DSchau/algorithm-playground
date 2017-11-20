@@ -65,22 +65,13 @@ export class Selector extends Component {
           return nested;
         }, []);
 
+
+    const value = options.find(({ key }) => key === defaultValue.key);
+
     return (
       <SelectContainer>
-        <Select defaultValue={defaultValue} onChange={this.handleOnChange}>
-          {options.map(item => {
-            if (Array.isArray(item)) {
-              const [{ group }] = item;
-              return (
-                <Optgroup key={group} label={group}>
-                  {item.map(nestedItem => (
-                    <Option key={nestedItem.label}>{nestedItem.label}</Option>
-                  ))}
-                </Optgroup>
-              );
-            }
-            return <Option key={item.key}>{item.label}</Option>;
-          })}
+        <Select defaultValue={value.key} onChange={ev => this.props.onAlgorithmChange(ev.target.value)}>
+          {options.map(item => <Option key={item.key} value={item.key}>{item.label}</Option>)}
         </Select>
         <DownIcon />
       </SelectContainer>

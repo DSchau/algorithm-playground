@@ -6,7 +6,7 @@ const observable = (arr, callback) =>
     },
     set: function(target, index, value, receiver) {
       target[index] = value;
-      callback([parseInt(index, 10), value]);
+      callback([index, value, target]);
       return true;
     }
   });
@@ -15,18 +15,37 @@ const observable = (arr, callback) =>
  * Given a row (an array of blocks), sort by hsl using the given algorithm
  */
 if (typeof onmessage !== 'undefined') {
+  const handleSort = (row, sortFunction) => {
+    let changes = [];
+    const updateChanges = update => changes.push(update);
+
+    // console.log(`input`, row.sort((a, b) => a - b));
+
+    const observableArr = observable(row, updateChanges);
+
+    sortFunction(observableArr);
+
+    const last = changes[changes.length - 1] || [];
+    const sorted = last[last.length - 1];
+
+    // console.log(`output`, sorted);
+
+    return { changes, sorted }
+  };
+
   onmessage = ev => {
-    const { data: { row, sorter = row => row } } = ev;
+    const { data: { row, rows, sorter } } = ev;
 
     const sortFunction = new Function(sorter)();
 
     let changes = [];
-
-    const updateChanges = update => changes.push(update);
-
-    const observableArr = observable(row, updateChanges);
-
-    const sorted = sortFunction(observableArr);
+    if (rows) {
+      for (let i = 0; i < rows.length; i++) {
+        changes.push(handleSort(rows[i], sortFunction).changes);
+      }
+    } else {
+      changes = handleSort(row, sortFunction).changes
+    }
 
     postMessage(changes);
   };

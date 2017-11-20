@@ -4,9 +4,13 @@ import Code from 'react-icons/lib/md/code';
 import Github from 'react-icons/lib/go/mark-github';
 
 import { SERIF } from '../../style';
+import { ResetChanges } from '..';
+
+const Container = styled.div`
+  flex: 0 0 auto;
+`;
 
 const Footer = styled.footer`
-  flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -43,23 +47,26 @@ const GithubIcon = styled(Github)`
   font-size: 20px;
 `;
 
-function FooterComponent() {
+function FooterComponent({ onDiscard, localChanges }) {
   return (
-    <Footer>
-      <Description>
-        Made with <CodeIcon /> by{' '}
-        <Link href="https://dustinschau.com" target="_blank" rel="noopener">
-          Dustin Schau
+    <Container>
+      {localChanges && <ResetChanges onDiscard={onDiscard} />}
+      <Footer>
+        <Description>
+          Made with <CodeIcon /> by{' '}
+          <Link href="https://dustinschau.com" target="_blank" rel="noopener">
+            Dustin Schau
+          </Link>
+        </Description>
+        <Link
+          href="https://github.com/dschau/algorithm-playground"
+          target="_blank"
+          rel="noopener"
+        >
+          <GithubIcon />
         </Link>
-      </Description>
-      <Link
-        href="https://github.com/dschau/algorithm-playground"
-        target="_blank"
-        rel="noopener"
-      >
-        <GithubIcon />
-      </Link>
-    </Footer>
+      </Footer>
+    </Container>
   );
 }
 

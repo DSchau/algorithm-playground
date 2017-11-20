@@ -47,13 +47,15 @@ export function App() {
             algorithm,
             algorithms,
             defaultAlgorithm,
+            localChanges,
+            query,
             theme
           }) => (
             <ThemeProvider theme={theme}>
               <Container>
                 <Header
+                  defaultAlgorithm={algorithm}
                   algorithms={algorithms}
-                  defaultAlgorithm={defaultAlgorithm}
                   onAlgorithmChange={actions.handleAlgorithmChange}
                   onThemeChange={actions.handleThemeChange}
                   theme={theme}
@@ -69,7 +71,7 @@ export function App() {
                     theme={theme.primary}
                   />
                 </Content>
-                <Footer />
+                <Footer localChanges={localChanges} onDiscard={actions.handleDiscard} />
                 {updated && (
                   <Timer
                     duration={10000}

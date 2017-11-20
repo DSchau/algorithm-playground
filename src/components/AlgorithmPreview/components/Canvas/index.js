@@ -112,6 +112,7 @@ class CanvasComponent extends Component {
   };
 
   sortGrid() {
+    console.log(Math.abs(Math.cos(this.state.width)) * 10);
     return pRequestAnimationFrame(async () => {
       return await Promise.all(
         (this.state.grid || []).map(async (row, rowIndex) => {
@@ -126,7 +127,7 @@ class CanvasComponent extends Component {
               width: this.state.width,
               hue
             });
-            await delay(0);
+            await delay(Math.abs(Math.cos(this.state.width)) * 10);
             updateIndex += 1;
           }
 
