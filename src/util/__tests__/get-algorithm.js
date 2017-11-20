@@ -7,14 +7,14 @@ const algorithms = {
 };
 
 test('it returns an algorithm, if found', () => {
-  expect(getAlgorithm('Quick Sort', algorithms)).toEqual({
-    label: 'quickSort',
+  expect(getAlgorithm('quickSort', algorithms)).toEqual({
+    key: 'quickSort',
     value: algorithms.quickSort
   });
 });
 
 test('it returns fallback, if not found', () => {
-  const fallback = { label: 'sup', value: 'neat' };
+  const fallback = { key: 'sup', value: 'neat' };
   expect(
     getAlgorithm('I am not able to be found', algorithms, fallback)
   ).toEqual(fallback);

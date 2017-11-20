@@ -47,6 +47,7 @@ export function App() {
             algorithm,
             algorithms,
             defaultAlgorithm,
+            localChanges,
             query,
             theme
           }) => (
@@ -70,7 +71,7 @@ export function App() {
                     theme={theme.primary}
                   />
                 </Content>
-                <Footer />
+                <Footer localChanges={localChanges} onDiscard={actions.handleDiscard} />
                 {updated && (
                   <Timer
                     duration={10000}

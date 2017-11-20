@@ -48,6 +48,7 @@
     "history": "~4.7.2",
     "lodash.camelcase": "~4.3.0",
     "lodash.debounce": "~4.0.8",
+    "lz-string": "~1.4.4",
     "normalize.css": "~7.0.0",
     "polished": "~1.9.0",
     "proxy-polyfill": "~0.1.7",
