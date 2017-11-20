@@ -17,7 +17,7 @@ export class Provider extends Component {
 
     const defaultAlgorithm = {
       key: algorithmName,
-      value: code ? decompress(code) : ALGORITHMS[algorithm]
+      value: code ? decompress(code) : ALGORITHMS[algorithmName]
     };
 
     this.state = {
