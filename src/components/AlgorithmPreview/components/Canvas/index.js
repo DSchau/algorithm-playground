@@ -130,7 +130,7 @@ class CanvasComponent extends Component {
               width: this.state.width,
               hue
             });
-            await delay(2.5);
+            await delay(getDelay(this.state.width));
             updateIndex += 1;
           }
 
