@@ -1,57 +1,51 @@
 import React, { Component } from 'react';
-import styled, { css } from 'react-emotion';
+import styled from 'react-emotion';
 import { darken } from 'polished';
 
 import { SANS_SERIF, SLIDE_UP, Z_INDEX_SUPER } from '../../style';
 
-const Container = styled.div`
-  position: absolute;
-  bottom: 7.5%;
-  right: 2.5%;
-  width: auto;
-  padding: 0.5rem 1rem;
-  margin: 0 auto;
-  box-sizing: border-box;
-  border: 1px solid transparent;
-  animation: ${SLIDE_UP} 325ms cubic-bezier(0.39, 0.575, 0.565, 1);
-  z-index: ${Z_INDEX_SUPER};
-  font-family: ${SANS_SERIF};
+const Container = styled.div(({ theme }) => ({
+  backgroundColor: theme[theme.primary].base,
+  borderColor: theme[theme.primary].baseSecondary,
+  position:'absolute',
+  bottom: '7.5%',
+  right: '2.5%',
+  width: 'auto',
+  padding: '0.5rem 1rem',
+  margin: '0 auto',
+  boxSizing: 'border-box',
+  border: '1px solid transparent',
+  animation: `${SLIDE_UP} 325ms cubic-bezier(0.39, 0.575, 0.565, 1`,
+  zIndex: Z_INDEX_SUPER
+}));
 
-  ${({ theme }) => css`
-    background-color: ${theme[theme.primary].base};
-    border-color: ${darken(0.05, theme[theme.primary].base)};
-  `};
-`;
+const TimerContainer = styled.div({
+  textAlign: 'center'
+});
 
-const TimerContainer = styled.div`
-  text-align: center;
-`;
+const Title = styled.h1({
+  margin: 0,
+  padding: 0,
+  fontSize: 12,
+  display: 'inline-block',
+  textTransform: 'uppercase',
+  fontFamily: SANS_SERIF
+}, ({ theme }) => ({
+  color: theme[theme.primary].text
+}));
 
-const Title = styled.h1`
-  margin: 0;
-  padding: 0;
-  font-size: 12px;
-  display: inline-block;
-  text-transform: uppercase;
-
-  color: ${({ theme }) => theme[theme.primary].text};
-`;
-
-const Button = styled.button`
-  outline: none;
-  border-width: 0;
-  border-radius: 0.125rem;
-  margin-left: 1rem;
-  padding: 0.25rem 0.5rem;
-  box-sizing: border-box;
-
-  font-family: ${SANS_SERIF};
-
-  ${({ theme }) => css`
-    background-color: ${theme[theme.primary].text};
-    color: ${theme[theme.primary].base};
-  `};
-`;
+const Button = styled.button({
+  outline: 'none',
+  borderWidth: 0,
+  borderRadius: '0.125rem',
+  marginLeft: '1rem',
+  padding: '0.25rem 0.5rem',
+  boxSizing: 'border-box',
+  fontFamily: SANS_SERIF
+}, ({ theme }) => ({
+  backgroundColor: theme[theme.primary].text,
+  color: theme[theme.primary].base
+}));
 
 export class Timer extends Component {
   constructor(props) {

@@ -4,23 +4,26 @@ import InvertedIcon from 'react-icons/lib/go/light-bulb';
 
 import { Accessible, Selector } from '..';
 
-const Header = styled.header`
-  flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 44px
-  padding: 0 0.5rem;
-  box-sizing: border-box;
-  background-color: ${({ theme }) => theme[theme.primary].base};
-  border-bottom: 1px solid ${({ theme }) => theme[theme.primary].baseSecondary};
-  transition: 250ms ease-in-out;
-`;
+const Header = styled.header({
+  flex: '0 0 auto',
 
-const LightbulbIcon = styled(InvertedIcon)`
-  color: ${({ theme }) => theme[theme.primary].text};
-  font-size: 24px;
-`;
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  height: 44,
+  padding: '0 0.5rem',
+  boxSizing: 'border-box',
+  transition: '300ms cubic-bezier(0.39, 0.575, 0.565, 1)'
+}, ({ theme }) => ({
+  backgroundColor: theme[theme.primary].base,
+  borderBottom: `1px solid ${theme[theme.primary].baseSecondary}`
+}));
+
+const LightbulbIcon = styled(InvertedIcon)({
+  fontSize: 24
+}, ({ theme }) => ({
+  color: theme[theme.primary].text
+}));
 
 function HeaderComponent({
   defaultAlgorithm,

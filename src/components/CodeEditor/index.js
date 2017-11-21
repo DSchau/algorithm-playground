@@ -8,14 +8,14 @@ import 'codemirror/keymap/sublime';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/dracula.css';
 
-const Container = styled.div`
-  display: flex;
-  height: 100%;
-  width: 100%;
-  max-width: 100%;
+const Container = styled.div({
+  display: 'flex',
+  height: '100%',
+  width: '100%',
+  maxWidth: '100%',
 
-  position: relative;
-`;
+  position: 'relative'
+});
 
 export const CodeEditor = class extends Component {
   componentDidMount() {

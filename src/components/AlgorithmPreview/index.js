@@ -4,15 +4,14 @@ import styled from 'react-emotion';
 import { transpile } from '../../util';
 import { Canvas } from './components';
 
-const Container = styled.div`
-  display: flex;
-  background-color: #eee;
+const Container = styled.div({
+  display: 'flex',
 
-  height: 100%;
-  width: 100%;
+  height: '100%',
+  width: '100%',
 
-  overflow: auto;
-`;
+  overflow: 'auto'
+});
 
 export class AlgorithmPreview extends Component {
   constructor(props) {
