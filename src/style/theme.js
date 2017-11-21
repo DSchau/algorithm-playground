@@ -1,4 +1,4 @@
-import { darken, lighten } from 'polished';
+import { darken, lighten, invert } from 'polished';
 
 const dark = {
   base: '#030F01',
@@ -8,9 +8,17 @@ const dark = {
   danger: lighten(0.2, '#CD2C24')
 };
 
+// const light = {
+//   base: '#D6FFC7',
+//   baseSecondary: darken(0.05, '#D6FFC7'),
+//   text: dark.base,
+//   accent: darken(0.4, dark.accent),
+//   danger: lighten(0.1, '#CD2C24')
+// };
+
 const light = {
-  base: '#D6FFC7',
-  baseSecondary: darken(0.05, '#D6FFC7'),
+  base: lighten(0.075, '#D6FFC7'),
+  baseSecondary: '#FFF',
   text: dark.base,
   accent: darken(0.4, dark.accent),
   danger: lighten(0.1, '#CD2C24')
