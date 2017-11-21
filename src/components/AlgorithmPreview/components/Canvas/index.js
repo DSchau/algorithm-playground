@@ -98,11 +98,11 @@ class CanvasComponent extends Component {
           inProgress: true
         },
         async () => {
-          await this.sortGrid();
+          const sorted = await this.sortGrid();
 
           this.setState({
             inProgress: false,
-            sorted: true
+            sorted
           });
         }
       );
@@ -146,7 +146,8 @@ class CanvasComponent extends Component {
           return updates;
         })
       )
-        .catch(e => ({}))
+        .then(() => true)
+        .catch(e => false)
     });
   }
 

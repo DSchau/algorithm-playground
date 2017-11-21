@@ -81,7 +81,7 @@ export const updateRowAtPosition = context => ({
   blockSize = BLOCK_SIZE(width)
 }) => {
   if (cancelled) {
-    throw new Error('Cancelled');
+    throw new Error('Sort was cancelled before being finished');
   }
   return createBlock(context)(getColorFromHue(hue))(
     blockIndex * blockSize,
