@@ -5,7 +5,7 @@ import Play from 'react-icons/lib/md/play-arrow';
 import Replay from 'react-icons/lib/md/replay';
 
 import { createGrid, updateRowAtPosition } from '../../util';
-import { delay, pRequestAnimationFrame, sortRow } from '../../../../util';
+import { delay, pRequestAnimationFrame, Sortable, sortRow } from '../../../../util';
 import { SCALE_IN } from '../../../../style';
 
 const Container = styled.div`
@@ -49,6 +49,7 @@ class CanvasComponent extends Component {
     super(props);
 
     this.state = {
+      cancelled: false,
       context: null,
       grid: [],
       height: 400,
@@ -82,15 +83,18 @@ class CanvasComponent extends Component {
       this.setState({
         inProgress: false
       });
+    } else {
+      this.cancel(this.props.sortFunction !== this.props.sortFunction);
     }
   }
 
   handleClick = () => {
     if (this.state.sorted) {
       this.resetGrid();
-    } else {
+    } else if (!this.state.inProgress) {
       this.setState(
         {
+          cancelled: false,
           inProgress: true
         },
         async () => {
@@ -102,6 +106,8 @@ class CanvasComponent extends Component {
           });
         }
       );
+    } else {
+      this.cancel();
     }
   };
 
@@ -116,27 +122,31 @@ class CanvasComponent extends Component {
   };
 
   sortGrid() {
+    const { sortFunction } = this.props;
+    const { context, width } = this.state;
     return pRequestAnimationFrame(async () => {
       return await Promise.all(
         (this.state.grid || []).map(async (row, rowIndex) => {
-          const updates = await sortRow(row, this.props.sortFunction);
+          const updates = await sortRow(row, sortFunction);
 
           let updateIndex = 0;
           while (updateIndex < updates.length) {
             const [blockIndex, hue] = updates[updateIndex];
-            updateRowAtPosition(this.state.context)({
+            updateRowAtPosition(context)({
+              cancelled: this.state.cancelled,
               rowIndex,
               blockIndex,
-              width: this.state.width,
+              width,
               hue
             });
-            await delay(getDelay(this.state.width));
+            await delay(getDelay(width));
             updateIndex += 1;
           }
 
           return updates;
         })
-      );
+      )
+        .catch(e => ({}))
     });
   }
 
@@ -148,6 +158,20 @@ class CanvasComponent extends Component {
         width: this.state.width
       }),
       sorted: false
+    });
+  }
+
+  cancel(reset = true) {
+    this.setState({
+      cancelled: true,
+      inProgress: false,
+      sorted: false,
+      ...(reset && {
+        grid: createGrid(this.state.context)({
+          height: this.state.height,
+          width: this.state.width
+        })
+      } : {})
     });
   }
 

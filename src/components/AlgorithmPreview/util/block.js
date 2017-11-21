@@ -73,12 +73,16 @@ export const updateRow = context => (row, rowIndex) => {
 };
 
 export const updateRowAtPosition = context => ({
+  cancelled,
   rowIndex,
   blockIndex,
   hue,
   width,
   blockSize = BLOCK_SIZE(width)
 }) => {
+  if (cancelled) {
+    throw new Error('Cancelled');
+  }
   return createBlock(context)(getColorFromHue(hue))(
     blockIndex * blockSize,
     rowIndex * blockSize,
