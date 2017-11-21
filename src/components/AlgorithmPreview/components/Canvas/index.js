@@ -84,7 +84,7 @@ class CanvasComponent extends Component {
         inProgress: false
       });
     } else {
-      this.cancel();
+      this.cancel(this.props.sortFunction !== this.props.sortFunction);
     }
   }
 
@@ -161,15 +161,17 @@ class CanvasComponent extends Component {
     });
   }
 
-  cancel() {
+  cancel(reset = true) {
     this.setState({
       cancelled: true,
-      grid: createGrid(this.state.context)({
-        height: this.state.height,
-        width: this.state.width
-      }),
       inProgress: false,
-      sorted: false
+      sorted: false,
+      ...(reset && {
+        grid: createGrid(this.state.context)({
+          height: this.state.height,
+          width: this.state.width
+        })
+      } : {})
     });
   }
 
