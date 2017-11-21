@@ -34,20 +34,20 @@ export class Provider extends Component {
   }
 
   handleAlgorithmChange = algorithmName => {
-    const { history, query } = this.state;
+    const { history, query: { theme } } = this.state;
     const algorithm = getAlgorithm(algorithmName, ALGORITHMS);
-    const updatedQuery = {
-      ...query,
-      algorithm: algorithm.key
+    const query = {
+      algorithm: algorithm.key,
+      theme
     };
     history.replace({
       code: '',
-      search: queryString.stringify(updatedQuery)
+      search: queryString.stringify(query)
     });
     this.setState({
       algorithm,
       localChanges: false,
-      query: updatedQuery
+      query: query
     });
   };
 
