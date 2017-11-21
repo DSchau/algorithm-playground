@@ -87,7 +87,7 @@ class CanvasComponent extends Component {
         inProgress: false
       });
     } else {
-      this.cancel(this.props.sortFunction !== this.props.sortFunction);
+      this.cancel(this.props.sortFunction !== sortFunction);
     }
   }
 

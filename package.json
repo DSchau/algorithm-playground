@@ -7,7 +7,7 @@
   "scripts": {
     "build": "webpack --env.environment production",
     "format": "prettier \"src/**/*.js\" \"*.js\" --single-quote --write",
-    "start": "webpack-dev-server --env.environment development",
+    "start": "webpack-dev-server --env.environment development --port 8000",
     "test": "jest"
   },
   "devDependencies": {
