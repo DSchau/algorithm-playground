@@ -8,18 +8,18 @@ import { createGrid, updateRowAtPosition } from '../../util';
 import { delay, pRequestAnimationFrame, Sortable, sortRow } from '../../../../util';
 import { SCALE_IN } from '../../../../style';
 
-const Container = styled.div`
-  height: 100%;
-  width: 100%;
+const Container = styled.div({
+  height: '100%',
+  width: '100%',
 
-  position: relative;
-  overflow: hidden;
+  position: 'relative',
+  overflow: 'hidden',
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center'
+});
 
 const Canvas = styled.canvas`
   position: absolute;
@@ -32,15 +32,18 @@ const Canvas = styled.canvas`
   -ms-interpolation-mode: nearest-neighbor;
 `;
 
-const StyledIcon = component => styled(component)`
-  position: relative;
-  z-index: 2;
-
-  font-size: 120px;
-  color: ${({ theme }) => theme[theme.primary].base};
-
-  animation: ${SCALE_IN} 0.3s cubic-bezier(0.39, 0.575, 0.565, 1) both;
-`;
+const StyledIcon = component => styled(component)(({ theme }) => ({
+  position: 'relative',
+  zIndex: 2,
+  fontSize: 120,
+  color: theme[theme.primary].base,
+  animation: `${SCALE_IN} 300ms cubic-bezier(0.39, 0.575, 0.565, 1) both`,
+  transition: '300ms cubic-bezier(0.39, 0.575, 0.565, 1)',
+  ':hover': {
+    color: theme[theme.primary === 'dark' ? 'light' : 'dark'].base,
+    fontSize: 140
+  }
+}));
 
 const getDelay = (distance, scale = 5000, clamp = 4) => (scale / (distance + (scale / 1000))) ^ (1 / clamp);
 

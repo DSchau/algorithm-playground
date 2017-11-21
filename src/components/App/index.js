@@ -15,27 +15,27 @@ import {
 
 import { LARGE } from '../../style';
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-`;
+const Container = styled.div({
+  display: 'flex',
+  flexDirection: 'column',
+  height: '100%'
+});
 
-const Content = styled.main`
-  flex: 1 1 auto;
-  position: relative;
-  overflow-y: auto;
+const Content = styled.main({
+  flex: '1 1 auto',
+  position: 'relative',
+  overflowY: 'auto',
 
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-  max-width: 100%;
+  display: 'flex',
+  flexDirection: 'column',
+  height: '100%',
+  width: '100%',
+  maxWidth: '100%',
 
-  ${LARGE`
-flex-direction: row;
-  `};
-`;
+  ...LARGE({
+    flexDirection: 'row'
+  })
+});
 
 export function App() {
   return (

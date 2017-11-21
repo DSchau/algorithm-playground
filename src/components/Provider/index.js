@@ -34,10 +34,11 @@ export class Provider extends Component {
   }
 
   handleAlgorithmChange = algorithmName => {
-    const { history } = this.state;
+    const { history, query: { theme } } = this.state;
     const algorithm = getAlgorithm(algorithmName, ALGORITHMS);
     const query = {
-      algorithm: algorithm.key
+      algorithm: algorithm.key,
+      theme
     };
     history.replace({
       code: '',
@@ -46,7 +47,7 @@ export class Provider extends Component {
     this.setState({
       algorithm,
       localChanges: false,
-      query
+      query: query
     });
   };
 
