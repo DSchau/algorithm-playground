@@ -1,6 +1,6 @@
 import { memoize } from '../../../util';
 
-const BLOCK_SIZE = width => Math.ceil(Math.log10(width)) * 4;
+const BLOCK_SIZE = width => Math.ceil(Math.log10(width)) * 5;
 const SATURATION = 100;
 const LIGHTNESS = 50;
 
@@ -15,9 +15,15 @@ const randomColor = () => {
   return getColorFromHue(hue);
 };
 
-const rowColors = memoize(numColors =>
-  new Array(numColors).fill(undefined).map(() => randomColor())
-);
+const rowColors = memoize((numColors, max = 360) => {
+  const rangeFactor = Math.ceil(max / numColors);
+  let colors = [];
+  for (let i = 0; i < numColors; i++) {
+    const hue = i + 1 === numColors ? max : rangeFactor * i;
+    colors.push(getColorFromHue(hue));
+  }
+  return colors;
+});
 
 export const createBlock = context => color => (...args) => {
   const [x, y, height, width = height] = args;
@@ -30,7 +36,7 @@ export const createBlock = context => color => (...args) => {
 export const createRow = context => ({ width, blockSize, y = 0 }) => {
   let blocks = [];
   const numBlocks = Math.ceil(width / blockSize);
-  const colors = rowColors(numBlocks + 1).slice(0);
+  const colors = rowColors(numBlocks).slice(0);
   for (let i = 0; i < numBlocks; i++) {
     const color = colors
       .splice(Math.floor(Math.random() * colors.length), 1)

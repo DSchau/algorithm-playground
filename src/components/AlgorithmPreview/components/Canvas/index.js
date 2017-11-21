@@ -42,6 +42,8 @@ const StyledIcon = component => styled(component)`
   animation: ${SCALE_IN} 0.3s cubic-bezier(0.39, 0.575, 0.565, 1) both;
 `;
 
+const getDelay = (distance, scale = 5000, clamp = 4) => (scale / (distance + (scale / 1000))) ^ (1 / clamp);
+
 class CanvasComponent extends Component {
   constructor(props) {
     super(props);
@@ -72,8 +74,10 @@ class CanvasComponent extends Component {
     window.removeEventListener('resize', this.handleResize);
   }
 
-  componentWillReceiveProps({ sortFunction }) {
-    if (!this.props.sortFunction || this.props.sortFunction !== sortFunction && this.state.sorted) {
+  componentWillReceiveProps({ localChanges, sortFunction }) {
+    if (this.props.localChanges !== localChanges) {
+      this.handleResize();
+    } else if (!this.props.sortFunction || this.props.sortFunction !== sortFunction && this.state.sorted) {
       this.resetGrid();
       this.setState({
         inProgress: false
@@ -112,7 +116,6 @@ class CanvasComponent extends Component {
   };
 
   sortGrid() {
-    console.log(Math.abs(Math.cos(this.state.width)) * 10);
     return pRequestAnimationFrame(async () => {
       return await Promise.all(
         (this.state.grid || []).map(async (row, rowIndex) => {
@@ -127,7 +130,7 @@ class CanvasComponent extends Component {
               width: this.state.width,
               hue
             });
-            await delay(Math.abs(Math.cos(this.state.width)) * 10);
+            await delay(2.5);
             updateIndex += 1;
           }
 

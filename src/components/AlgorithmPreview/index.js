@@ -40,10 +40,11 @@ export class AlgorithmPreview extends Component {
   };
 
   render() {
+    const { localChanges } = this.props;
     const { sortFunction } = this.state;
     return (
       <Container>
-        <Canvas sortFunction={sortFunction} theme={this.props.theme} />
+        <Canvas localChanges={localChanges} sortFunction={sortFunction} theme={this.props.theme} />
       </Container>
     );
   }

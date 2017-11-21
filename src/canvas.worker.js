@@ -19,16 +19,12 @@ if (typeof onmessage !== 'undefined') {
     let changes = [];
     const updateChanges = update => changes.push(update);
 
-    // console.log(`input`, row.sort((a, b) => a - b));
-
     const observableArr = observable(row, updateChanges);
 
     sortFunction(observableArr);
 
     const last = changes[changes.length - 1] || [];
     const sorted = last[last.length - 1];
-
-    // console.log(`output`, sorted);
 
     return { changes, sorted }
   };
