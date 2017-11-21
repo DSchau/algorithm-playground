@@ -69,6 +69,7 @@ export function App() {
                   <AlgorithmPreview
                     algorithm={algorithm.value}
                     theme={theme.primary}
+                    localChanges={localChanges}
                   />
                 </Content>
                 <Footer localChanges={localChanges} onDiscard={actions.handleDiscard} />
