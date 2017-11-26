@@ -4,6 +4,8 @@ import debounce from 'lodash.debounce';
 import Play from 'react-icons/lib/md/play-arrow';
 import Replay from 'react-icons/lib/md/replay';
 
+import { SortedStatus } from '../SortedStatus';
+
 import { createGrid, updateRowAtPosition } from '../../util';
 import { delay, pRequestAnimationFrame, Sortable, sortRow } from '../../../../util';
 import { SCALE_IN } from '../../../../style';
@@ -58,7 +60,7 @@ class CanvasComponent extends Component {
       height: 400,
       width: 250,
       inProgress: false,
-      sorted: false
+      sortComplete: false
     };
 
     this.handleResize = debounce(this.handleResize, 50);
@@ -81,18 +83,15 @@ class CanvasComponent extends Component {
   componentWillReceiveProps({ localChanges, sortFunction }) {
     if (this.props.localChanges !== localChanges) {
       this.handleResize();
-    } else if (!this.props.sortFunction || this.props.sortFunction !== sortFunction && this.state.sorted) {
-      this.resetGrid();
-      this.setState({
-        inProgress: false
-      });
+    } else if (!this.props.sortFunction || this.props.sortFunction !== sortFunction && this.state.sortComplete) {
+      this.resetGrid({ inProgress: false });
     } else {
       this.cancel(this.props.sortFunction !== sortFunction);
     }
   }
 
   handleClick = () => {
-    if (this.state.sorted) {
+    if (this.state.sortComplete) {
       this.resetGrid();
     } else if (!this.state.inProgress) {
       this.setState(
@@ -101,11 +100,11 @@ class CanvasComponent extends Component {
           inProgress: true
         },
         async () => {
-          const sorted = await this.sortGrid();
+          const sortComplete = await this.sortGrid();
 
           this.setState({
             inProgress: false,
-            sorted
+            sortComplete
           });
         }
       );
@@ -128,9 +127,14 @@ class CanvasComponent extends Component {
     const { sortFunction } = this.props;
     const { context, width } = this.state;
     return pRequestAnimationFrame(async () => {
+      let allSorted = true;
       return await Promise.all(
         (this.state.grid || []).map(async (row, rowIndex) => {
-          const updates = await sortRow(row, sortFunction);
+          const { changes: updates, sorted } = await sortRow(row, sortFunction);
+
+          if (!sorted) {
+            allSorted = false;
+          }
 
           let updateIndex = 0;
           while (updateIndex < updates.length) {
@@ -149,19 +153,27 @@ class CanvasComponent extends Component {
           return updates;
         })
       )
-        .then(() => true)
+        .then(() => {
+          this.setState({
+            sorted: allSorted
+          });
+          return true;
+        })
         .catch(e => false)
     });
   }
 
-  resetGrid() {
+  resetGrid(additionalUpdate) {
     this.setState({
       inProgress: false,
       grid: createGrid(this.state.context)({
         height: this.state.height,
         width: this.state.width
       }),
-      sorted: false
+      sortComplete: false,
+      sorted: false,
+      validSort: false,
+      ...additionalUpdate
     });
   }
 
@@ -169,6 +181,7 @@ class CanvasComponent extends Component {
     this.setState({
       cancelled: true,
       inProgress: false,
+      sortComplete: false,
       sorted: false,
       ...(reset && {
         grid: createGrid(this.state.context)({
@@ -180,8 +193,7 @@ class CanvasComponent extends Component {
   }
 
   render() {
-    const { height, width, inProgress, sorted } = this.state;
-    const Icon = StyledIcon(sorted ? Replay : Play);
+    const { height, width, inProgress, sortComplete, sorted, validSort } = this.state;
     return (
       <Container
         innerRef={node => (this.container = node)}
@@ -196,7 +208,7 @@ class CanvasComponent extends Component {
           }}
           innerRef={node => (this.canvas = node)}
         />
-        {!inProgress && <Icon />}
+        {!inProgress && <SortedStatus sortComplete={sortComplete} isSorted={sorted} />}
       </Container>
     );
   }

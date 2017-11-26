@@ -1,0 +1,50 @@
+import React from 'react';
+import styled from 'react-emotion';
+import Play from 'react-icons/lib/md/play-arrow';
+import Replay from 'react-icons/lib/md/replay';
+
+import { SANS_SERIF, SCALE_IN, Z_INDEX_ABOVE_CONTENT } from '../../../../style';
+
+const Container = styled.div(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  transition: '300ms cubic-bezier(0.39, 0.575, 0.565, 1)',
+  transformOrigin: 'center center',
+  ':hover': {
+    color: theme[theme.primary === 'dark' ? 'light' : 'dark'].base,
+    fontSize: 140
+  }
+}));
+
+const Message = styled.p({
+  margin: 0,
+  padding: '0.25rem 0.5rem',
+  borderRadius: '0.25rem',
+  fontSize: 18,
+  fontFamily: SANS_SERIF,
+  zIndex: Z_INDEX_ABOVE_CONTENT,
+}, ({ theme }) => ({
+  backgroundColor: theme[theme.primary === 'dark' ? 'light' : 'dark'].base,
+  color: theme[theme.primary].base
+}));
+
+const StyledIcon = component => styled(component)(({ theme }) => ({
+  position: 'relative',
+  zIndex: 2,
+  fontSize: 120,
+  color: theme[theme.primary].base,
+  animation: `${SCALE_IN} 300ms cubic-bezier(0.39, 0.575, 0.565, 1) both`
+}));
+
+const getMessage = sorted => `Sorted ${sorted ? 'successfully' : 'unsuccessfully'}`;
+
+export function SortedStatus({ isSorted, sortComplete }) {
+  const Icon = StyledIcon(sortComplete ? Replay : Play);
+  return (
+    <Container>
+      <Icon />
+      {sortComplete && <Message>{getMessage(isSorted)}</Message>}
+    </Container>
+  );
+}

@@ -36,14 +36,20 @@ export class AlgorithmPreview extends Component {
         sortFunction: transformed
       });
     });
-  };
+  }
+
+  handleSortComplete = sorted => {
+    this.setState({
+      sorted
+    })
+  }
 
   render() {
     const { localChanges } = this.props;
-    const { sortFunction } = this.state;
+    const { sortFunction, sorted } = this.state;
     return (
       <Container>
-        <Canvas localChanges={localChanges} sortFunction={sortFunction} theme={this.props.theme} />
+        <Canvas localChanges={localChanges} sortFunction={sortFunction} onSortComplete={this.handleSortComplete} theme={this.props.theme} />
       </Container>
     );
   }
