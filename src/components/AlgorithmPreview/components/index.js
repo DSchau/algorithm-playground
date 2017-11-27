@@ -1,2 +1,2 @@
 export * from './Canvas';
-export * from './SortedStatus';
+export * from './StatusIcon';

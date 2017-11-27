@@ -29,22 +29,33 @@ const Message = styled.p({
   color: theme[theme.primary].base
 }));
 
-const StyledIcon = component => styled(component)(({ theme }) => ({
+const StyledIcon = component => styled(component)(({ theme }) => {
+  const opposite = theme[theme.primary === 'dark' ? 'light' : 'dark'];
+  const current = theme[theme.primary];
+  return {
   position: 'relative',
   zIndex: 2,
-  fontSize: 120,
+  fontSize: 72,
+  borderRadius: 72,
   color: theme[theme.primary].base,
-  animation: `${SCALE_IN} 300ms cubic-bezier(0.39, 0.575, 0.565, 1) both`
-}));
+  animation: `${SCALE_IN} 300ms cubic-bezier(0.39, 0.575, 0.565, 1) both`,
+  transition: '300ms cubic-bezier(0.39, 0.575, 0.565, 1)',
+  backgroundColor: current.base,
+  color: opposite.base,
+  ':hover': {
+    backgroundColor: opposite.base,
+    color: current.base,
+    fontSize: 90,
+    borderRadius: 90
+  }
+};
+});
 
-const getMessage = sorted => `Sorted ${sorted ? 'successfully' : 'unsuccessfully'}`;
-
-export function SortedStatus({ isSorted, sortComplete }) {
-  const Icon = StyledIcon(sortComplete ? Replay : Play);
+export function StatusIcon({ isSorted, sortComplete }) {
+  const ActionIcon = StyledIcon(sortComplete ? Replay : Play);
   return (
     <Container>
-      <Icon />
-      {sortComplete && <Message>{getMessage(isSorted)}</Message>}
+      <ActionIcon />
     </Container>
   );
 }

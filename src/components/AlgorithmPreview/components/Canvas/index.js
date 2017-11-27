@@ -4,7 +4,7 @@ import debounce from 'lodash.debounce';
 import Play from 'react-icons/lib/md/play-arrow';
 import Replay from 'react-icons/lib/md/replay';
 
-import { SortedStatus } from '../SortedStatus';
+import { StatusIcon } from '../StatusIcon';
 
 import { createGrid, updateRowAtPosition } from '../../util';
 import { delay, pRequestAnimationFrame, Sortable, sortRow } from '../../../../util';
@@ -85,8 +85,6 @@ class CanvasComponent extends Component {
       this.handleResize();
     } else if (!this.props.sortFunction || this.props.sortFunction !== sortFunction && this.state.sortComplete) {
       this.resetGrid({ inProgress: false });
-    } else {
-      this.cancel(this.props.sortFunction !== sortFunction);
     }
   }
 
@@ -208,7 +206,7 @@ class CanvasComponent extends Component {
           }}
           innerRef={node => (this.canvas = node)}
         />
-        {!inProgress && <SortedStatus sortComplete={sortComplete} isSorted={sorted} />}
+        {!inProgress && <StatusIcon sortComplete={sortComplete} isSorted={sorted} />}
       </Container>
     );
   }
