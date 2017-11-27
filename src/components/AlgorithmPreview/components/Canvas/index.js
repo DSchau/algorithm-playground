@@ -7,7 +7,12 @@ import Replay from 'react-icons/lib/md/replay';
 import { StatusIcon } from '../StatusIcon';
 
 import { createGrid, updateRowAtPosition } from '../../util';
-import { delay, pRequestAnimationFrame, Sortable, sortRow } from '../../../../util';
+import {
+  delay,
+  pRequestAnimationFrame,
+  Sortable,
+  sortRow
+} from '../../../../util';
 import { SCALE_IN } from '../../../../style';
 
 const Container = styled.div({
@@ -34,20 +39,22 @@ const Canvas = styled.canvas`
   -ms-interpolation-mode: nearest-neighbor;
 `;
 
-const StyledIcon = component => styled(component)(({ theme }) => ({
-  position: 'relative',
-  zIndex: 2,
-  fontSize: 120,
-  color: theme[theme.primary].base,
-  animation: `${SCALE_IN} 300ms cubic-bezier(0.39, 0.575, 0.565, 1) both`,
-  transition: '300ms cubic-bezier(0.39, 0.575, 0.565, 1)',
-  ':hover': {
-    color: theme[theme.primary === 'dark' ? 'light' : 'dark'].base,
-    fontSize: 140
-  }
-}));
+const StyledIcon = component =>
+  styled(component)(({ theme }) => ({
+    position: 'relative',
+    zIndex: 2,
+    fontSize: 120,
+    color: theme[theme.primary].base,
+    animation: `${SCALE_IN} 300ms cubic-bezier(0.39, 0.575, 0.565, 1) both`,
+    transition: '300ms cubic-bezier(0.39, 0.575, 0.565, 1)',
+    ':hover': {
+      color: theme[theme.primary === 'dark' ? 'light' : 'dark'].base,
+      fontSize: 140
+    }
+  }));
 
-const getDelay = (distance, scale = 5000, clamp = 4) => (scale / (distance + (scale / 1000))) ^ (1 / clamp);
+const getDelay = (distance, scale = 5000, clamp = 4) =>
+  (scale / (distance + scale / 1000)) ^ (1 / clamp);
 
 class CanvasComponent extends Component {
   constructor(props) {
@@ -83,7 +90,10 @@ class CanvasComponent extends Component {
   componentWillReceiveProps({ localChanges, sortFunction }) {
     if (this.props.localChanges !== localChanges) {
       this.handleResize();
-    } else if (!this.props.sortFunction || this.props.sortFunction !== sortFunction && this.state.sortComplete) {
+    } else if (
+      !this.props.sortFunction ||
+      (this.props.sortFunction !== sortFunction && this.state.sortComplete)
+    ) {
       this.resetGrid({ inProgress: false });
     }
   }
@@ -157,7 +167,7 @@ class CanvasComponent extends Component {
           });
           return true;
         })
-        .catch(e => false)
+        .catch(e => false);
     });
   }
 
@@ -186,12 +196,19 @@ class CanvasComponent extends Component {
           height: this.state.height,
           width: this.state.width
         })
-      } : {})
+      }: {})
     });
   }
 
   render() {
-    const { height, width, inProgress, sortComplete, sorted, validSort } = this.state;
+    const {
+      height,
+      width,
+      inProgress,
+      sortComplete,
+      sorted,
+      validSort
+    } = this.state;
     return (
       <Container
         innerRef={node => (this.container = node)}
@@ -206,7 +223,9 @@ class CanvasComponent extends Component {
           }}
           innerRef={node => (this.canvas = node)}
         />
-        {!inProgress && <StatusIcon sortComplete={sortComplete} isSorted={sorted} />}
+        {!inProgress && (
+          <StatusIcon sortComplete={sortComplete} isSorted={sorted} />
+        )}
       </Container>
     );
   }

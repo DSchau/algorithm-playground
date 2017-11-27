@@ -12,7 +12,6 @@ export function selectionSort(arr) {
     }
 
     [arr[minAtIndex], arr[i]] = [arr[i], arr[minAtIndex]];
-    
   }
   return arr;
 }

@@ -24,7 +24,10 @@ export class Provider extends Component {
       defaultAlgorithm,
       algorithm: defaultAlgorithm,
       history: createHistory(),
-      localChanges: this.hasLocalChanges({ algorithm: defaultAlgorithm, query }),
+      localChanges: this.hasLocalChanges({
+        algorithm: defaultAlgorithm,
+        query
+      }),
       query,
       theme: {
         ...THEME,
@@ -69,7 +72,10 @@ export class Provider extends Component {
     };
     this.setState({
       algorithm: newAlgorithm,
-      localChanges: this.hasLocalChanges({ algorithm: newAlgorithm, query: params }),
+      localChanges: this.hasLocalChanges({
+        algorithm: newAlgorithm,
+        query: params
+      }),
       query: params
     });
   };
@@ -91,7 +97,7 @@ export class Provider extends Component {
       localChanges: false,
       query
     });
-  }
+  };
 
   handleThemeChange = primary => {
     const query = {

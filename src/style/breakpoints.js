@@ -1,14 +1,13 @@
 // @flow
 const breakpointFn = (breakpoint: number) => {
   return (...args) => {
-    const merged = args
-      .reduce((allMerged, arg) => {
-        allMerged = {
-          ...allMerged,
-          ...arg
-        };
-        return allMerged;
-      }, {});
+    const merged = args.reduce((allMerged, arg) => {
+      allMerged = {
+        ...allMerged,
+        ...arg
+      };
+      return allMerged;
+    }, {});
 
     return {
       [`@media only screen and (min-width: ${breakpoint}px)`]: merged

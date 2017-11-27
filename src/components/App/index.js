@@ -72,7 +72,10 @@ export function App() {
                     localChanges={localChanges}
                   />
                 </Content>
-                <Footer localChanges={localChanges} onDiscard={actions.handleDiscard} />
+                <Footer
+                  localChanges={localChanges}
+                  onDiscard={actions.handleDiscard}
+                />
                 {updated && (
                   <Timer
                     duration={10000}
