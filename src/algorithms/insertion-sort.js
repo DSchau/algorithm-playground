@@ -1,13 +1,9 @@
 /*
- * Insertion sort starts with two arrays; an empty array, and the input array
- * We iterate over the input array
- * each time putting the item in the input array into the empty array
- * until each item has been looped over, leaving us with a sorted array
+ * CODE: http://blog.benoitvallon.com/sorting-algorithms-in-javascript/sorting-algorithms-in-javascript-all-the-code/#insertion-sort
+ * Insertion sort algorithm iterates, consuming one input element each repetition, and growing a sorted output list. Each iteration removes one element from the input data, finds the location it belongs within the sorted list, and inserts it there. It repeats until no input elements remain.
+ * MORE INFO: https://en.wikipedia.org/wiki/Insertion_sort
  */
 export function insertionSort(arr) {
-  if (!arr || !arr.length) {
-    return arr;
-  }
   for (let i = 1; i < arr.length; i++) {
     let value = arr[i];
     let j = i - 1;
