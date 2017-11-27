@@ -11,23 +11,26 @@ const SelectContainer = styled.div({
   position: 'relative'
 });
 
-const Select = styled.select({
-  height: 32,
-  backgroundColor: 'transparent',
-  fontFamily: SANS_SERIF,
-  border: '2px solid transparent',
-  boxShadow: 'none',
-  appearance: 'none',
-  fontSize: 20,
-  paddingRight: '1.3rem',
-  outline: 'none',
-  zIndex: Z_INDEX_PREVIEW_CONTENT
-}, ({ theme }) => ({
-  color: theme[theme.primary].text,
-  ':focus': {
-    boxShadow: `0 0 5px ${theme[theme.primary].accent}`
-  }
-}));
+const Select = styled.select(
+  {
+    height: 32,
+    backgroundColor: 'transparent',
+    fontFamily: SANS_SERIF,
+    border: '2px solid transparent',
+    boxShadow: 'none',
+    appearance: 'none',
+    fontSize: 20,
+    paddingRight: '1.3rem',
+    outline: 'none',
+    zIndex: Z_INDEX_PREVIEW_CONTENT
+  },
+  ({ theme }) => ({
+    color: theme[theme.primary].text,
+    ':focus': {
+      boxShadow: `0 0 5px ${theme[theme.primary].accent}`
+    }
+  })
+);
 
 const Optgroup = styled.optgroup({
   color: 'black'
@@ -37,14 +40,17 @@ const Option = styled.option({
   color: 'black'
 });
 
-const DownIcon = styled(DownIconElement)({
-  position: 'absolute',
-  right: 0,
-  top: '50%',
-  transform: 'translateY(-50%)'
-}, ({ theme }) => ({
-  color: theme[theme.primary].text
-}));
+const DownIcon = styled(DownIconElement)(
+  {
+    position: 'absolute',
+    right: 0,
+    top: '50%',
+    transform: 'translateY(-50%)'
+  },
+  ({ theme }) => ({
+    color: theme[theme.primary].text
+  })
+);
 
 export class Selector extends Component {
   handleOnChange = ev => {
@@ -66,13 +72,19 @@ export class Selector extends Component {
           return nested;
         }, []);
 
-
     const value = options.find(({ key }) => key === defaultValue.key);
 
     return (
       <SelectContainer>
-        <Select defaultValue={value.key} onChange={ev => this.props.onAlgorithmChange(ev.target.value)}>
-          {options.map(item => <Option key={item.key} value={item.key}>{item.label}</Option>)}
+        <Select
+          defaultValue={value.key}
+          onChange={ev => this.props.onAlgorithmChange(ev.target.value)}
+        >
+          {options.map(item => (
+            <Option key={item.key} value={item.key}>
+              {item.label}
+            </Option>
+          ))}
         </Select>
         <DownIcon />
       </SelectContainer>

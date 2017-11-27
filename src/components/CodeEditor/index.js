@@ -61,7 +61,7 @@ export const CodeEditor = class extends Component {
   handleChange = ev => {
     const value = ev.getValue();
     if (value !== this.props.algorithm.value) {
-      this.props.onUpdate(ev.getValue(), );
+      this.props.onUpdate(ev.getValue());
     }
   };
 

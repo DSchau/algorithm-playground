@@ -11,6 +11,10 @@ const observable = (arr, callback) =>
     }
   });
 
+const isSorted = (arr = []) =>
+  arr.length > 0 &&
+  arr.every((num, index) => index === 0 || arr[index - 1] <= num);
+
 /*
  * Given a row (an array of blocks), sort by hsl using the given algorithm
  */
@@ -24,9 +28,9 @@ if (typeof onmessage !== 'undefined') {
     sortFunction(observableArr);
 
     const last = changes[changes.length - 1] || [];
-    const sorted = last[last.length - 1];
+    const result = last[last.length - 1];
 
-    return { changes, sorted }
+    return { changes, sorted: isSorted(result) };
   };
 
   onmessage = ev => {
@@ -34,16 +38,16 @@ if (typeof onmessage !== 'undefined') {
 
     const sortFunction = new Function(sorter)();
 
-    let changes = [];
+    let updates = [];
     if (rows) {
       for (let i = 0; i < rows.length; i++) {
-        changes.push(handleSort(rows[i], sortFunction).changes);
+        updates.push(handleSort(rows[i], sortFunction));
       }
     } else {
-      changes = handleSort(row, sortFunction).changes
+      updates = handleSort(row, sortFunction);
     }
 
-    postMessage(changes);
+    postMessage(updates);
   };
 }
 
