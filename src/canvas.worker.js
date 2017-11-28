@@ -1,11 +1,14 @@
+// @flow
 // https://stackoverflow.com/a/5100420
-const observable = (arr, callback) =>
+declare var self: DedicatedWorkerGlobalScope;
+
+const observable = (arr: any[], callback: (arr: any[]) => any): any =>
   new Proxy(arr, {
-    apply: function(target, thisArg, argumentsList) {
-      return thisArg[target].apply(this, argumentList);
+    apply: function(target: any, thisArg: any, argumentsList: any[]): any {
+      return thisArg[target].apply(this, argumentsList);
     },
-    set: function(target, index, value, receiver) {
-      target[index] = value;
+    set: function(target: any[], index: string, value: any): boolean {
+      target[parseInt(index, 10)] = value;
       callback([index, value, target]);
       return true;
     }
@@ -19,9 +22,9 @@ const isSorted = (arr = []) =>
  * Given a row (an array of blocks), sort by hsl using the given algorithm
  */
 if (typeof onmessage !== 'undefined') {
-  const handleSort = (row, sortFunction) => {
+  const handleSort = (row: number[], sortFunction: any) => {
     let changes = [];
-    const updateChanges = update => changes.push(update);
+    const updateChanges = (update: any[]) => changes.push(update);
 
     const observableArr = observable(row, updateChanges);
 
@@ -47,7 +50,7 @@ if (typeof onmessage !== 'undefined') {
       updates = handleSort(row, sortFunction);
     }
 
-    postMessage(updates);
+    self.postMessage(updates);
   };
 }
 
