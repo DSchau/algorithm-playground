@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import camelCase from 'lodash.camelcase';
 
-const EXCLUDE = [/^__/, /^\./, /index\.js/];
+const EXCLUDE = [/^__/, /^\./, /index\.js/, /bogo/];
 
 const base = path.join(__dirname, '..');
 const files = fs

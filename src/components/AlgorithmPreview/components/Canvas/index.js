@@ -87,14 +87,15 @@ class CanvasComponent extends Component {
     window.removeEventListener('resize', this.handleResize);
   }
 
-  componentWillReceiveProps({ localChanges, sortFunction }) {
+  componentWillReceiveProps({ localChanges, sortFunction, theme }) {
     if (this.props.localChanges !== localChanges) {
       this.handleResize();
     } else if (
       !this.props.sortFunction ||
-      (this.props.sortFunction !== sortFunction && this.state.sortComplete)
+      (this.props.sortFunction !== sortFunction && this.state.sortComplete) ||
+      this.props.theme !== theme
     ) {
-      this.resetGrid({ inProgress: false });
+      this.resetGrid({ inProgress: false }, theme);
     }
   }
 
@@ -171,12 +172,13 @@ class CanvasComponent extends Component {
     });
   }
 
-  resetGrid(additionalUpdate) {
+  resetGrid(additionalUpdate, theme = this.props.theme) {
     this.setState({
       inProgress: false,
       grid: createGrid(this.state.context)({
         height: this.state.height,
-        width: this.state.width
+        width: this.state.width,
+        ...this.getMaxAndStart(theme)
       }),
       sortComplete: false,
       sorted: false,
@@ -194,10 +196,21 @@ class CanvasComponent extends Component {
       ...(reset && {
         grid: createGrid(this.state.context)({
           height: this.state.height,
-          width: this.state.width
+          width: this.state.width,
+          ...this.getMaxAndStart(this.props.theme)
         })
       }: {})
     });
+  }
+
+  getMaxAndStart(theme) {
+    if (theme === 'dark') {
+      return {};
+    }
+    return {
+      max: 250,
+      min: 50
+    };
   }
 
   render() {
