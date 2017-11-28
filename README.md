@@ -32,7 +32,7 @@ A playground to experiment with different sorting algorithms and see a preview o
 
 ## Credits
 
-Without the work of these excellent folks, the algorithms you see visualized would have been written by me (but not as well). I sincerely thank them for their work!
+Without the work of these excellent folks, the algorithms you see visualized would have been written by me (but probably not as well). I sincerely thank them for their work!
 
 - [Sorting Algorithms in JavaScript](http://blog.benoitvallon.com/sorting-algorithms-in-javascript/sorting-algorithms-in-javascript-all-the-code/)
 - [Rosetta Code](https://rosettacode.org/wiki/Sorting_algorithms/Cocktail_sort#JavaScript)
