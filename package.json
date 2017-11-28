@@ -7,6 +7,7 @@
   "scripts": {
     "precommit": "lint-staged",
     "build": "webpack --env.environment production",
+    "markdown": "md-magic",
     "format": "prettier \"src/**/*.js\" \"*.js\" --single-quote --write",
     "start": "webpack-dev-server --env.environment development --port 8000",
     "test": "jest"
@@ -30,6 +31,7 @@
     "husky": "~0.14.3",
     "jest": "~21.2.1",
     "lint-staged": "~5.0.0",
+    "markdown-magic": "~0.1.19",
     "name-all-modules-plugin": "~1.0.1",
     "offline-plugin": "~4.8.4",
     "prettier": "~1.8.2",
