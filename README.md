@@ -13,6 +13,23 @@ A playground to experiment with different sorting algorithms and see a preview o
 
 [![Algorithm Playground](./assets/algorithm-playground.gif)](https://giphy.com/gifs/xUOxf7xnJc4xVeZlDy/html5)
 
+## Algorithms
+
+<!-- AUTO-GENERATED-CONTENT:START (LIBRARIES) -->
+- [Bitonic Merge Sort](./src/algorithms/bitonic-merge-sort.js)
+- [Bogo Sort](./src/algorithms/bogo-sort.js)
+- [Bubble Sort](./src/algorithms/bubble-sort.js)
+- [Bucket Sort](./src/algorithms/bucket-sort.js)
+- [Cocktail Sort](./src/algorithms/cocktail-sort.js)
+- [Comb Sort](./src/algorithms/comb-sort.js)
+- [Insertion Sort](./src/algorithms/insertion-sort.js)
+- [Merge Sort](./src/algorithms/merge-sort.js)
+- [Quick Sort](./src/algorithms/quick-sort.js)
+- [Radix Sort](./src/algorithms/radix-sort.js)
+- [Selection Sort](./src/algorithms/selection-sort.js)
+- [Shell Sort](./src/algorithms/shell-sort.js)
+<!-- AUTO-GENERATED-CONTENT:END (LIBRARIES) -->
+
 ## Credits
 
 Without the work of these excellent folks, the algorithms you see visualized would have been written by me (but not as well). I sincerely thank them for their work!
