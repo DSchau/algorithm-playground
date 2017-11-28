@@ -22,4 +22,6 @@ Without the work of these excellent folks, the algorithms you see visualized wou
 - [Learn JS With Me](http://learnjswith.me/quick-sort-in-javascript/)
 - [NCZOnline](https://www.nczonline.net/blog/2009/09/08/computer-science-in-javascript-selection-sort/)
 
+Additionally, I'd like to credit the work of [reddit user morolin](https://www.reddit.com/r/woahdude/comments/78fzi7/sorting_algorithms_visualized_gifv/?st=jaj5goe1&sh=e80fb95c) for the initial inspiration
+
 [algorithm-playground]: https://algorithm-playground.com
