@@ -27,17 +27,19 @@ const rowColors = memoize(
   }
 );
 
-export const createBlock = (context: CanvasRenderingContext2D) => (
+export const createBlock = (context: ?CanvasRenderingContext2D) => (
   color: string
 ) => (...args: any[]) => {
   const [x, y, height, width = height] = args;
-  context.fillStyle = color;
-  context.clearRect(x, y, width, height);
-  context.fillRect(x, y, width, height);
+  if (context) {
+    context.fillStyle = color;
+    context.clearRect(x, y, width, height);
+    context.fillRect(x, y, width, height);
+  }
   return getHueFromHsl(color);
 };
 
-export const createRow = (context: CanvasRenderingContext2D) => ({
+export const createRow = (context: ?CanvasRenderingContext2D) => ({
   width,
   blockSize,
   y = 0,
@@ -56,7 +58,7 @@ export const createRow = (context: CanvasRenderingContext2D) => ({
   return blocks;
 };
 
-export const createGrid = (context: CanvasRenderingContext2D) => ({
+export const createGrid = (context: ?CanvasRenderingContext2D) => ({
   height,
   width,
   blockSize = BLOCK_SIZE(width),
@@ -74,7 +76,7 @@ export const createGrid = (context: CanvasRenderingContext2D) => ({
   return grid;
 };
 
-export const updateRow = (context: CanvasRenderingContext2D) => (
+export const updateRow = (context: ?CanvasRenderingContext2D) => (
   row: any[],
   rowIndex: number
 ) => {
@@ -89,7 +91,7 @@ export const updateRow = (context: CanvasRenderingContext2D) => (
   });
 };
 
-export const updateRowAtPosition = (context: CanvasRenderingContext2D) => ({
+export const updateRowAtPosition = (context: ?CanvasRenderingContext2D) => ({
   cancelled,
   rowIndex,
   blockIndex,

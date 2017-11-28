@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+// @flow
+import * as React from 'react';
 import styled from 'react-emotion';
 import debounce from 'lodash.debounce';
 import Play from 'react-icons/lib/md/play-arrow';
@@ -13,7 +14,9 @@ import {
   Sortable,
   sortRow
 } from '../../../../util';
-import { SCALE_IN } from '../../../../style';
+import { SCALE_IN, type Themes } from '../../../../style';
+
+import { type Algorithm, type Algorithms } from '../../../../interfaces';
 
 const Container = styled.div({
   height: '100%',
@@ -56,18 +59,41 @@ const StyledIcon = component =>
 const getDelay = (distance, scale = 5000, clamp = 4) =>
   (scale / (distance + scale / 1000)) ^ (1 / clamp);
 
-class CanvasComponent extends Component {
-  constructor(props) {
+interface Props {
+  algorithm: Algorithm;
+  algorithms: Algorithms;
+  localChanges: boolean;
+  sortFunction: string;
+  theme: Themes;
+}
+
+interface State {
+  cancelled: boolean;
+  context?: ?CanvasRenderingContext2D;
+  grid: any[];
+  height: number;
+  width: number;
+  inProgress: boolean;
+  sortComplete: boolean;
+  sorted: ?boolean;
+}
+
+class CanvasComponent extends React.Component<Props, State> {
+  canvas: ?HTMLCanvasElement;
+  container: ?HTMLElement;
+  handleResize: () => void;
+
+  constructor(props: Props) {
     super(props);
 
     this.state = {
       cancelled: false,
-      context: null,
       grid: [],
       height: 400,
       width: 250,
       inProgress: false,
-      sortComplete: false
+      sortComplete: false,
+      sorted: undefined
     };
 
     this.handleResize = debounce(this.handleResize, 50);
@@ -75,9 +101,13 @@ class CanvasComponent extends Component {
 
   componentDidMount() {
     this.setState({
-      context: this.canvas.getContext('2d'),
-      height: this.container.clientHeight,
-      width: this.container.clientWidth
+      context: this.canvas && this.canvas.getContext('2d'),
+      ...(this.container
+        ? {
+            height: this.container.clientHeight,
+            width: this.container.clientWidth
+          }
+        : {})
     });
 
     window.addEventListener('resize', this.handleResize);
@@ -87,7 +117,12 @@ class CanvasComponent extends Component {
     window.removeEventListener('resize', this.handleResize);
   }
 
-  componentWillReceiveProps({ localChanges, sortFunction, theme }) {
+  componentWillReceiveProps({
+    algorithm,
+    localChanges,
+    sortFunction,
+    theme
+  }: Props) {
     if (this.props.localChanges !== localChanges) {
       this.handleResize();
     } else if (
@@ -96,6 +131,8 @@ class CanvasComponent extends Component {
       this.props.theme !== theme
     ) {
       this.resetGrid({ inProgress: false }, theme);
+    } else if (this.props.algorithm.key !== algorithm.key) {
+      this.cancel();
     }
   }
 
@@ -123,13 +160,15 @@ class CanvasComponent extends Component {
   };
 
   handleResize = () => {
-    this.setState(
-      {
-        height: this.container.clientHeight,
-        width: this.container.clientWidth
-      },
-      () => this.resetGrid()
-    );
+    if (this.container) {
+      this.setState(
+        {
+          height: this.container.clientHeight,
+          width: this.container.clientWidth
+        },
+        () => this.resetGrid()
+      );
+    }
   };
 
   sortGrid() {
@@ -172,7 +211,7 @@ class CanvasComponent extends Component {
     });
   }
 
-  resetGrid(additionalUpdate, theme = this.props.theme) {
+  resetGrid(additionalUpdate: any, theme: Themes = this.props.theme) {
     this.setState({
       inProgress: false,
       grid: createGrid(this.state.context)({
@@ -182,28 +221,29 @@ class CanvasComponent extends Component {
       }),
       sortComplete: false,
       sorted: false,
-      validSort: false,
       ...additionalUpdate
     });
   }
 
-  cancel(reset = true) {
+  cancel(reset: boolean = true) {
     this.setState({
       cancelled: true,
       inProgress: false,
       sortComplete: false,
       sorted: false,
-      ...(reset && {
-        grid: createGrid(this.state.context)({
-          height: this.state.height,
-          width: this.state.width,
-          ...this.getMaxAndStart(this.props.theme)
-        })
-      }: {})
+      ...(reset
+        ? {
+            grid: createGrid(this.state.context)({
+              height: this.state.height,
+              width: this.state.width,
+              ...this.getMaxAndStart(this.props.theme)
+            })
+          }
+        : {})
     });
   }
 
-  getMaxAndStart(theme) {
+  getMaxAndStart(theme: Themes) {
     if (theme === 'dark') {
       return {};
     }
@@ -214,14 +254,7 @@ class CanvasComponent extends Component {
   }
 
   render() {
-    const {
-      height,
-      width,
-      inProgress,
-      sortComplete,
-      sorted,
-      validSort
-    } = this.state;
+    const { height, width, inProgress, sortComplete, sorted } = this.state;
     return (
       <Container
         innerRef={node => (this.container = node)}
@@ -236,9 +269,7 @@ class CanvasComponent extends Component {
           }}
           innerRef={node => (this.canvas = node)}
         />
-        {!inProgress && (
-          <StatusIcon sortComplete={sortComplete} isSorted={sorted} />
-        )}
+        {!inProgress && <StatusIcon sortComplete={sortComplete} />}
       </Container>
     );
   }

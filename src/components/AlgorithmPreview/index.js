@@ -3,7 +3,8 @@ import * as React from 'react';
 import styled from 'react-emotion';
 
 import { transpile } from '../../util';
-import { type ThemeProps } from '../../style';
+import { type Themes, type ThemeProps } from '../../style';
+import { type Algorithm, type Algorithms } from '../../interfaces';
 import { Canvas } from './components';
 
 const Container = styled.div({
@@ -16,9 +17,10 @@ const Container = styled.div({
 });
 
 interface Props {
-  algorithm: string;
+  algorithms: Algorithms;
+  algorithm: Algorithm;
   localChanges: boolean;
-  theme: string;
+  theme: Themes;
 }
 
 interface State {
@@ -33,11 +35,11 @@ export class AlgorithmPreview extends React.Component<Props, State> {
   };
 
   componentDidMount() {
-    this.transformCode(this.props.algorithm);
+    this.transformCode(this.props.algorithm.value);
   }
 
   componentWillReceiveProps({ algorithm }: Props) {
-    this.transformCode(algorithm);
+    this.transformCode(algorithm.value);
   }
 
   transformCode = (code: string) => {
@@ -55,11 +57,13 @@ export class AlgorithmPreview extends React.Component<Props, State> {
   };
 
   render() {
-    const { localChanges } = this.props;
+    const { algorithm, algorithms, localChanges } = this.props;
     const { sortFunction, sorted } = this.state;
     return (
       <Container>
         <Canvas
+          algorithms={algorithms}
+          algorithm={algorithm}
           localChanges={localChanges}
           sortFunction={sortFunction}
           onSortComplete={this.handleSortComplete}
