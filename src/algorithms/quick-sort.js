@@ -1,6 +1,10 @@
 /*
  * CODE: http://learnjswith.me/quick-sort-in-javascript/
- * Quicksort is a divide and conquer algorithm. Quicksort first divides a large array into two smaller sub-arrays: the low elements and the high elements. Quicksort can then recursively sort the sub-arrays.
+ *
+ * Quicksort is a divide and conquer algorithm. Quicksort first divides a 
+ large array into two smaller sub-arrays: the low elements and the high 
+ elements. Quicksort can then recursively sort the sub-arrays.
+ *
  * MORE INFO: https://en.wikipedia.org/wiki/Quicksort
  */
 function partition(arr, left, right) {
