@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react';
 import styled, { injectGlobal } from 'react-emotion';
 import CodeMirror from 'codemirror';
@@ -8,6 +9,8 @@ import 'codemirror/keymap/sublime';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/dracula.css';
 
+import { ThemeProps } from '../../style';
+
 const Container = styled.div({
   display: 'flex',
   height: '100%',
@@ -17,7 +20,20 @@ const Container = styled.div({
   position: 'relative'
 });
 
-export const CodeEditor = class extends Component {
+interface Props {
+  algorithm: {
+    key: string,
+    value: string
+  };
+  onUpdate: (value: string) => void;
+  theme: ThemeProps;
+}
+interface State {}
+
+export const CodeEditor = class extends Component<Props, State> {
+  editor: any;
+  textArea: ?HTMLTextAreaElement;
+
   componentDidMount() {
     this.editor = CodeMirror.fromTextArea(this.textArea, {
       autofocus: true,
@@ -35,7 +51,7 @@ export const CodeEditor = class extends Component {
     this.updateTextarea(this.props);
   }
 
-  componentWillReceiveProps(props) {
+  componentWillReceiveProps(props: Props) {
     const { theme } = props;
     if (theme.primary !== this.props.theme.primary) {
       this.editor.setOption(
@@ -43,7 +59,7 @@ export const CodeEditor = class extends Component {
         theme.primary === 'dark' ? 'dracula' : 'default'
       );
     }
-    this.updateTextarea(props, this.props.algorithm.key);
+    this.updateTextarea(props);
   }
 
   componentWillUnmount() {
@@ -51,14 +67,14 @@ export const CodeEditor = class extends Component {
     this.editor.toTextArea();
   }
 
-  updateTextarea({ algorithm }) {
+  updateTextarea({ algorithm }: Props) {
     const { value } = algorithm;
     if (value && value !== this.editor.getValue()) {
       this.editor.setValue(value);
     }
   }
 
-  handleChange = ev => {
+  handleChange = (ev: any) => {
     const value = ev.getValue();
     if (value !== this.props.algorithm.value) {
       this.props.onUpdate(ev.getValue());

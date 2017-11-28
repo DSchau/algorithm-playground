@@ -1,13 +1,52 @@
-import React, { Component } from 'react';
+// @flow
+import * as React from 'react';
 import queryString from 'query-string';
 import createHistory from 'history/createBrowserHistory';
 import ALGORITHMS from '../../algorithms';
 
 import { capitalize, compress, decompress, getAlgorithm } from '../../util';
-import { THEME } from '../../style';
+import { THEME, type Themes, type ThemeProps } from '../../style';
 
-export class Provider extends Component {
-  constructor(props) {
+interface Algorithm {
+  key: string;
+  label?: string;
+  value: string;
+}
+
+interface RenderPropUpdate {
+  actions: {
+    handleAlgorithmChange: any,
+    handleAlgorithmUpdate: any,
+    handleDiscard: any,
+    handleThemeChange: any,
+    handleTimerComplete: any
+  };
+  algorithm: Algorithm;
+  algorithms: Algorithm[];
+  localChanges: boolean;
+  theme: ThemeProps;
+}
+
+type RenderProps = {| render(updated: RenderPropUpdate): React.Node |};
+type ChildrenProps = {| children(updated: RenderPropUpdate): React.Node |};
+
+type Props = RenderProps | ChildrenProps;
+
+interface State {
+  algorithm: {
+    key: string,
+    value: string
+  };
+  history: any;
+  localChanges: boolean;
+  query: {
+    [key: string]: string
+  };
+  theme: ThemeProps;
+}
+
+export class Provider extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
 
     const query = queryString.parse(location.search);
@@ -36,7 +75,7 @@ export class Provider extends Component {
     };
   }
 
-  handleAlgorithmChange = algorithmName => {
+  handleAlgorithmChange = (algorithmName: string) => {
     const { history, query: { theme } } = this.state;
     const algorithm = getAlgorithm(algorithmName, ALGORITHMS);
     const query = {
@@ -54,7 +93,7 @@ export class Provider extends Component {
     });
   };
 
-  handleAlgorithmUpdate = value => {
+  handleAlgorithmUpdate = (value: string) => {
     const { algorithm, history, query } = this.state;
     let params = query;
     if (value !== ALGORITHMS[algorithm.key]) {
@@ -99,7 +138,7 @@ export class Provider extends Component {
     });
   };
 
-  handleThemeChange = primary => {
+  handleThemeChange = (primary: Themes) => {
     const query = {
       ...this.state.query,
       theme: primary
@@ -120,7 +159,7 @@ export class Provider extends Component {
     window.location.reload();
   };
 
-  hasLocalChanges({ algorithm, query } = this.state) {
+  hasLocalChanges({ algorithm, query }: any = this.state) {
     const { key: name } = algorithm;
     const { code } = query;
 
@@ -131,8 +170,10 @@ export class Provider extends Component {
   }
 
   render() {
-    const { render, children = render } = this.props;
-    return children({
+    const renderer = this.props.render
+      ? this.props.render
+      : this.props.children;
+    return renderer({
       actions: {
         handleAlgorithmChange: this.handleAlgorithmChange,
         handleAlgorithmUpdate: this.handleAlgorithmUpdate,

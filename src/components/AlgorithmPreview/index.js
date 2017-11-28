@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
+// @flow
+import * as React from 'react';
 import styled from 'react-emotion';
 
 import { transpile } from '../../util';
+import { type ThemeProps } from '../../style';
 import { Canvas } from './components';
 
 const Container = styled.div({
@@ -13,24 +15,32 @@ const Container = styled.div({
   overflow: 'auto'
 });
 
-export class AlgorithmPreview extends Component {
-  constructor(props) {
-    super(props);
+interface Props {
+  algorithm: string;
+  localChanges: boolean;
+  theme: string;
+}
 
-    this.state = {
-      sortFunction: ``
-    };
-  }
+interface State {
+  sorted: boolean;
+  sortFunction: string;
+}
+
+export class AlgorithmPreview extends React.Component<Props, State> {
+  state = {
+    sorted: false,
+    sortFunction: ``
+  };
 
   componentDidMount() {
     this.transformCode(this.props.algorithm);
   }
 
-  componentWillReceiveProps({ algorithm }) {
+  componentWillReceiveProps({ algorithm }: Props) {
     this.transformCode(algorithm);
   }
 
-  transformCode = code => {
+  transformCode = (code: string) => {
     return transpile(code).then(transformed => {
       this.setState({
         sortFunction: transformed
@@ -38,7 +48,7 @@ export class AlgorithmPreview extends Component {
     });
   };
 
-  handleSortComplete = sorted => {
+  handleSortComplete = (sorted: boolean) => {
     this.setState({
       sorted
     });

@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+// @flow
+import * as React from 'react';
 import OfflinePlugin from 'offline-plugin/runtime';
 
-export function handleOffline({ onUpdated = () => {} }) {
+export function handleOffline({ onUpdated = () => {} }: any) {
   if (process.env.NODE_ENV === 'production') {
     OfflinePlugin.install({
       onUpdateReady() {
@@ -13,7 +14,16 @@ export function handleOffline({ onUpdated = () => {} }) {
   }
 }
 
-export class Offline extends Component {
+type RenderProps = {| render(updated: boolean): React.Node |};
+type ChildrenProps = {| children(updated: boolean): React.Node |};
+
+type Props = RenderProps | ChildrenProps;
+
+interface State {
+  updated: boolean;
+}
+
+export class Offline extends React.Component<Props, State> {
   state = {
     updated: false
   };

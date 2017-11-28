@@ -46,7 +46,6 @@ export function App() {
             actions,
             algorithm,
             algorithms,
-            defaultAlgorithm,
             localChanges,
             query,
             theme

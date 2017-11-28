@@ -1,3 +1,4 @@
+// @flow
 import { darken, lighten, invert, mix } from 'polished';
 
 const dark = {
@@ -21,3 +22,19 @@ export const THEME = {
   light,
   primary: 'dark'
 };
+
+export type Themes = 'dark' | 'light';
+
+export interface Theme {
+  base: string;
+  baseSecondary: string;
+  text: string;
+  accent: string;
+  danger: string;
+}
+
+export interface ThemeProps {
+  dark: Theme;
+  light: Theme;
+  primary: Themes;
+}

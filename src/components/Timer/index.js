@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react';
 import styled from 'react-emotion';
 import { darken } from 'polished';
@@ -53,8 +54,19 @@ const Button = styled.button(
   })
 );
 
-export class Timer extends Component {
-  constructor(props) {
+interface Props {
+  duration: number;
+  onElapsed(): void;
+}
+
+interface State {
+  seconds: number;
+}
+
+export class Timer extends Component<Props, State> {
+  interval: number;
+
+  constructor(props: Props) {
     super(props);
 
     this.state = {

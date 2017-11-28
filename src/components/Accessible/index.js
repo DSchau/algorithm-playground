@@ -1,4 +1,5 @@
-import React from 'react';
+// @flow
+import * as React from 'react';
 import styled from 'react-emotion';
 
 const Button = styled.button(
@@ -14,10 +15,21 @@ const Button = styled.button(
   })
 );
 
-export function Accessible({ render, children = render, onClick, ...rest }) {
+type RenderProps = { render(): React.Node };
+type ChildrenProps = { children(): React.Node };
+
+type Props = (RenderProps | ChildrenProps) & {
+  ariaLabel?: ?string,
+  onClick: () => void,
+  [key: string]: any
+};
+
+export function Accessible(props: Props) {
+  const { onClick, ...rest } = props;
+  const renderer = props.render ? props.render : props.children;
   return (
     <Button onClick={onClick} {...rest}>
-      {children()}
+      {renderer()}
     </Button>
   );
 }

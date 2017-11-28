@@ -1,11 +1,14 @@
+// @flow
 import 'proxy-polyfill';
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import 'normalize.css';
 import 'typeface-montserrat';
 import 'typeface-bitter';
 
 import { App } from './components';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const root: Element = (document.getElementById('root'): any);
+
+ReactDOM.render(<App />, root);

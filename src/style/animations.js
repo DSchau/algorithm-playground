@@ -1,3 +1,4 @@
+// @flow
 import { keyframes } from 'emotion';
 
 export const FADE_IN = keyframes`
