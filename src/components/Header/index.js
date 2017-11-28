@@ -9,7 +9,6 @@ import { ThemeProps } from '../../style';
 const Header = styled.header(
   {
     flex: '0 0 auto',
-
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',

@@ -14,19 +14,11 @@ function isSorted(arr) {
 }
 
 function shuffle(arr) {
-  let count = arr.length;
-  let temp;
-  let index;
-
-  while (count > 0) {
-    index = Math.floor(Math.random() * count);
-    count--;
-
-    temp = arr[count];
-    arr[count] = arr[index];
-    arr[index] = temp;
+  let range = arr.slice(0);
+  while (range.length) {
+    const rand = Math.floor(Math.random() * range.length);
+    arr[rand] = range.splice(rand, 1).pop();
   }
-
   return arr;
 }
 

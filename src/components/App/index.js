@@ -66,7 +66,8 @@ export function App() {
                     theme={theme}
                   />
                   <AlgorithmPreview
-                    algorithm={algorithm.value}
+                    algorithms={algorithms}
+                    algorithm={algorithm}
                     theme={theme.primary}
                     localChanges={localChanges}
                   />

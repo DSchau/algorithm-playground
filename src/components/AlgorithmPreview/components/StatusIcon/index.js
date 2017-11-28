@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import styled from 'react-emotion';
 import Play from 'react-icons/lib/md/play-arrow';
@@ -56,11 +57,10 @@ const StyledIcon = component =>
   });
 
 interface Props {
-  isSorted: boolean;
   sortComplete: boolean;
 }
 
-export function StatusIcon({ isSorted, sortComplete }: Props) {
+export function StatusIcon({ sortComplete }: Props) {
   const ActionIcon = StyledIcon(sortComplete ? Replay : Play);
   return (
     <Container>
