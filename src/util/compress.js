@@ -1,3 +1,5 @@
+// @flow
+
 /*
  * This code lifted from bvaughn/babel-repl
  * Thank you!

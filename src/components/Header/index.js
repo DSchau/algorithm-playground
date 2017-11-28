@@ -1,8 +1,10 @@
+// @flow
 import React from 'react';
 import styled from 'react-emotion';
 import InvertedIcon from 'react-icons/lib/go/light-bulb';
 
 import { Accessible, Selector } from '..';
+import { ThemeProps } from '../../style';
 
 const Header = styled.header(
   {
@@ -31,13 +33,27 @@ const LightbulbIcon = styled(InvertedIcon)(
   })
 );
 
+interface Algorithm {
+  key: string;
+  value: string;
+}
+
+interface Props {
+  defaultAlgorithm: any;
+  algorithms: any[];
+  onAlgorithmChange: (algorithm: string) => void;
+  onThemeChange: (theme: string) => void;
+  theme: ThemeProps;
+}
+
 function HeaderComponent({
   defaultAlgorithm,
   algorithms,
   onAlgorithmChange,
   onThemeChange,
   theme
-}) {
+}: Props) {
+  const opposite = theme.primary === 'dark' ? 'light' : 'dark';
   return (
     <Header>
       <Selector
@@ -46,12 +62,8 @@ function HeaderComponent({
         onAlgorithmChange={onAlgorithmChange}
       />
       <Accessible
-        aria-label={`Toggle ${
-          theme.primary === 'dark' ? 'light' : 'dark'
-        } mode`}
-        onClick={() =>
-          onThemeChange(theme.primary === 'dark' ? 'light' : 'dark')
-        }
+        ariaLabel={`Toggle ${opposite} mode`}
+        onClick={() => onThemeChange(opposite)}
         render={() => <LightbulbIcon />}
       />
     </Header>

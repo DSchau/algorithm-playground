@@ -1,6 +1,9 @@
+// @flow
 import * as buble from 'buble';
 import * as acorn from 'acorn';
 import * as walk from 'acorn/dist/walk';
+
+declare var self: DedicatedWorkerGlobalScope;
 
 const getTypeValue = node => {
   switch (node.declaration.type) {
@@ -58,7 +61,7 @@ if (typeof onmessage !== 'undefined') {
         sourcemap: false
       });
       const exportedFn = transformLastExportToReturn(transformed);
-      postMessage(exportedFn);
+      self.postMessage(exportedFn);
     } catch (e) {
       console.warn(e);
     }

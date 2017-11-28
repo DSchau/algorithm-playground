@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import styled from 'react-emotion';
 import Code from 'react-icons/lib/md/code';
@@ -63,7 +64,12 @@ const GithubIcon = styled(Github)(
   })
 );
 
-function FooterComponent({ onDiscard, localChanges }) {
+interface Props {
+  onDiscard: () => void;
+  localChanges: boolean;
+}
+
+function FooterComponent({ onDiscard, localChanges }: Props) {
   return (
     <Container>
       {localChanges && <ResetChanges onDiscard={onDiscard} />}

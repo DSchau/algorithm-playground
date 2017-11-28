@@ -1,7 +1,7 @@
 // @flow
 const breakpointFn = (breakpoint: number) => {
-  return (...args) => {
-    const merged = args.reduce((allMerged, arg) => {
+  return (...args: any[]) => {
+    const merged = args.reduce((allMerged: any, arg: any) => {
       allMerged = {
         ...allMerged,
         ...arg

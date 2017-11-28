@@ -55,7 +55,12 @@ const StyledIcon = component =>
     };
   });
 
-export function StatusIcon({ isSorted, sortComplete }) {
+interface Props {
+  isSorted: boolean;
+  sortComplete: boolean;
+}
+
+export function StatusIcon({ isSorted, sortComplete }: Props) {
   const ActionIcon = StyledIcon(sortComplete ? Replay : Play);
   return (
     <Container>

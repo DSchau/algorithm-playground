@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react';
 import styled from 'react-emotion';
 import DownIconElement from 'react-icons/lib/md/arrow-drop-down';
@@ -52,10 +53,26 @@ const DownIcon = styled(DownIconElement)(
   })
 );
 
-export class Selector extends Component {
-  handleOnChange = ev => {
-    const { target } = ev;
-    const { value } = target;
+interface AlgorithmItem {
+  key: string;
+  label: string;
+}
+
+interface Props {
+  defaultValue: {
+    key: string,
+    label: string
+  };
+  onAlgorithmChange(algorithm: string): void;
+  items: AlgorithmItem[];
+}
+
+interface State {}
+
+export class Selector extends Component<Props, State> {
+  handleOnChange = (ev: SyntheticEvent<HTMLSelectElement>) => {
+    const { currentTarget } = ev;
+    const { value } = currentTarget;
     this.props.onAlgorithmChange(value);
   };
 
@@ -72,7 +89,7 @@ export class Selector extends Component {
           return nested;
         }, []);
 
-    const value = options.find(({ key }) => key === defaultValue.key);
+    const value = options.find(({ key }) => key === defaultValue.key) || {};
 
     return (
       <SelectContainer>

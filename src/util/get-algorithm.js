@@ -1,6 +1,18 @@
+// @flow
 import { capitalize } from './capitalize';
 
-export const getAlgorithm = (algorithm, algorithms, fallback = {}) => {
+type Algorithms = {
+  [key: string]: {
+    key: string,
+    value: string
+  }
+};
+
+export const getAlgorithm = (
+  algorithm: string,
+  algorithms: Algorithms,
+  fallback: any = {}
+) => {
   return (
     Object.keys(algorithms)
       .map(name => ({

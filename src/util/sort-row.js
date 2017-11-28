@@ -1,9 +1,10 @@
+// @flow
 import CanvasWorker from '../canvas.worker';
 
-export function sortRow(row, sorter) {
-  const worker = new CanvasWorker();
+export function sortRow(row: number[], sorter: string): Promise<any> {
+  const worker: Worker = (new CanvasWorker(): any);
   return new Promise((resolve, reject) => {
-    worker.onmessage = ev => {
+    worker.onmessage = (ev: any) => {
       resolve(ev.data);
     };
 

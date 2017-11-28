@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import styled from 'react-emotion';
 
@@ -52,7 +53,11 @@ const Button = styled.button(
   }
 );
 
-export function ResetChanges({ onDiscard }) {
+interface Props {
+  onDiscard(): void;
+}
+
+export function ResetChanges({ onDiscard }: Props) {
   return (
     <Container>
       <Message>You have local changes</Message>
