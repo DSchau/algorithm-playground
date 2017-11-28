@@ -16,7 +16,7 @@ const Container = styled.div(({ theme }) => ({
   margin: '0 auto',
   boxSizing: 'border-box',
   border: '1px solid transparent',
-  animation: `${SLIDE_UP} 325ms cubic-bezier(0.39, 0.575, 0.565, 1`,
+  animation: `${SLIDE_UP} 325ms cubic-bezier(0.39, 0.575, 0.565, 1)`,
   zIndex: Z_INDEX_SUPER
 }));
 
