@@ -34,9 +34,13 @@ const removeFunctionBody = code => {
         escodegen.generate(node),
         escodegen.generate(replaced, ESCODEGEN_OPTS)
       ]);
-    } else if (node.type === 'ExportNamedDeclaration') {
+    } else if (
+      node.type === 'ExportNamedDeclaration' ||
+      node.type === 'ExportDefaultDeclaration'
+    ) {
       const replaced = acorn.parse(
-        `export function ${node.declaration.id.name}(arr) { return arr; }`,
+        `export ${(node.type === 'ExportDefaultDeclaration' && 'default') ||
+          ''} function ${node.declaration.id.name}(arr) { return arr; }`,
         ACORN_OPTS
       );
       replaced.params = node.declaration.params;

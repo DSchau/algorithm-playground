@@ -1,2 +1,2 @@
 // @flow
-export * from './visibility';
+export * from './Visibility';
