@@ -55,8 +55,10 @@ export function App() {
                 <Header
                   defaultAlgorithm={algorithm}
                   algorithms={algorithms}
+                  algorithm={algorithm}
                   onAlgorithmChange={actions.handleAlgorithmChange}
                   onThemeChange={actions.handleThemeChange}
+                  onAlgorithmVisibilityChange={actions.handleVisibilityChange}
                   theme={theme}
                 />
                 <Content>

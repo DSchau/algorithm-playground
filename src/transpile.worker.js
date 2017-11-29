@@ -45,7 +45,6 @@ const transformLastExportToReturn = code => {
   );
   const statement = defaultExport || lastExport;
   return code.replace(statement, 'return ');
-  // return code.replace(statement, '(').trim() + ')';
 };
 
 if (typeof onmessage !== 'undefined') {
