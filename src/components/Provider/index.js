@@ -9,7 +9,8 @@ import {
   compress,
   decompress,
   getAlgorithm,
-  hideFunction
+  hideFunction,
+  isEmpty
 } from '../../util';
 import { THEME, type Themes, type ThemeProps } from '../../style';
 import { type Algorithm, type Algorithms } from '../../interfaces';
@@ -52,10 +53,12 @@ export class Provider extends React.Component<Props, State> {
     const { algorithm, code, theme } = query;
 
     const algorithmName = ALGORITHMS[algorithm] ? algorithm : 'quickSort';
+    const value = code ? decompress(code) : ALGORITHMS[algorithmName];
 
     const defaultAlgorithm = {
       key: algorithmName,
-      value: code ? decompress(code) : ALGORITHMS[algorithmName]
+      value,
+      hidden: isEmpty(value)
     };
 
     this.state = {

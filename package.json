@@ -27,6 +27,7 @@
     "extract-text-webpack-plugin": "~3.0.2",
     "file-loader": "~1.1.5",
     "flow-bin": "~0.59.0",
+    "flow-typed": "~2.2.3",
     "html-webpack-plugin": "~2.30.1",
     "husky": "~0.14.3",
     "jest": "~21.2.1",

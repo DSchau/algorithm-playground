@@ -2,6 +2,7 @@ export * from './capitalize';
 export * from './compress';
 export * from './delay';
 export * from './get-algorithm';
+export * from './is-empty';
 export * from './hide-function';
 export * from './memoize';
 export * from './promisified';
