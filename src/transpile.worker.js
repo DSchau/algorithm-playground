@@ -16,17 +16,6 @@ const getTypeValue = node => {
   }
 };
 
-const getName = node => {
-  switch (node.declaration.type) {
-    case 'FunctionExpression':
-      return node.declaration.id.name;
-    case 'VariableDeclaration':
-      return node.declaration.declarations[0].id.name;
-    default:
-      return '';
-  }
-};
-
 const transformLastExportToReturn = code => {
   let defaultExport;
   let lastExport;
@@ -45,7 +34,6 @@ const transformLastExportToReturn = code => {
   );
   const statement = defaultExport || lastExport;
   return code.replace(statement, 'return ');
-  // return code.replace(statement, '(').trim() + ')';
 };
 
 if (typeof onmessage !== 'undefined') {

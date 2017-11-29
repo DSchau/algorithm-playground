@@ -4,14 +4,16 @@ import queryString from 'query-string';
 import createHistory from 'history/createBrowserHistory';
 import ALGORITHMS from '../../algorithms';
 
-import { capitalize, compress, decompress, getAlgorithm } from '../../util';
+import {
+  capitalize,
+  compress,
+  decompress,
+  getAlgorithm,
+  hideFunction,
+  isEmpty
+} from '../../util';
 import { THEME, type Themes, type ThemeProps } from '../../style';
-
-interface Algorithm {
-  key: string;
-  label?: string;
-  value: string;
-}
+import { type Algorithm, type Algorithms } from '../../interfaces';
 
 interface RenderPropUpdate {
   actions: {
@@ -19,7 +21,8 @@ interface RenderPropUpdate {
     handleAlgorithmUpdate: any,
     handleDiscard: any,
     handleThemeChange: any,
-    handleTimerComplete: any
+    handleTimerComplete: any,
+    handleVisibilityChange: any
   };
   algorithm: Algorithm;
   algorithms: Algorithm[];
@@ -33,10 +36,7 @@ type ChildrenProps = {| children(updated: RenderPropUpdate): React.Node |};
 type Props = RenderProps | ChildrenProps;
 
 interface State {
-  algorithm: {
-    key: string,
-    value: string
-  };
+  algorithm: Algorithm;
   history: any;
   localChanges: boolean;
   query: {
@@ -53,10 +53,12 @@ export class Provider extends React.Component<Props, State> {
     const { algorithm, code, theme } = query;
 
     const algorithmName = ALGORITHMS[algorithm] ? algorithm : 'quickSort';
+    const value = code ? decompress(code) : ALGORITHMS[algorithmName];
 
     const defaultAlgorithm = {
       key: algorithmName,
-      value: code ? decompress(code) : ALGORITHMS[algorithmName]
+      value,
+      hidden: isEmpty(value)
     };
 
     this.state = {
@@ -131,6 +133,7 @@ export class Provider extends React.Component<Props, State> {
     this.setState({
       algorithm: {
         ...this.state.algorithm,
+        hidden: false,
         value: ALGORITHMS[algorithmName]
       },
       localChanges: false,
@@ -159,6 +162,23 @@ export class Provider extends React.Component<Props, State> {
     window.location.reload();
   };
 
+  handleVisibilityChange = (hidden: boolean) => {
+    const { algorithm } = this.state;
+    if (hidden) {
+      hideFunction(algorithm.value).then(value => {
+        this.setState({
+          algorithm: {
+            ...algorithm,
+            value,
+            hidden
+          }
+        });
+      });
+    } else {
+      this.handleDiscard();
+    }
+  };
+
   hasLocalChanges({ algorithm, query }: any = this.state) {
     const { key: name } = algorithm;
     const { code } = query;
@@ -166,7 +186,8 @@ export class Provider extends React.Component<Props, State> {
     if (!code) {
       return false;
     }
-    return decompress(code) !== ALGORITHMS[name].value;
+    const established = ALGORITHMS[name].value;
+    return code !== established && decompress(code) !== ALGORITHMS[name].value;
   }
 
   render() {
@@ -179,7 +200,8 @@ export class Provider extends React.Component<Props, State> {
         handleAlgorithmUpdate: this.handleAlgorithmUpdate,
         handleDiscard: this.handleDiscard,
         handleThemeChange: this.handleThemeChange,
-        handleTimerComplete: this.handleTimerComplete
+        handleTimerComplete: this.handleTimerComplete,
+        handleVisibilityChange: this.handleVisibilityChange
       },
       algorithms: ALGORITHMS,
       ...this.state

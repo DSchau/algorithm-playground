@@ -4,7 +4,9 @@ import styled from 'react-emotion';
 import InvertedIcon from 'react-icons/lib/go/light-bulb';
 
 import { Accessible, Selector } from '..';
+import { Visibility } from './components';
 import { ThemeProps } from '../../style';
+import { type Algorithm, type Algorithms } from '../../interfaces';
 
 const Header = styled.header(
   {
@@ -23,6 +25,11 @@ const Header = styled.header(
   })
 );
 
+const Buttons = styled.div({
+  display: 'flex',
+  marginLeft: 'auto'
+});
+
 const LightbulbIcon = styled(InvertedIcon)(
   {
     fontSize: 24
@@ -32,23 +39,22 @@ const LightbulbIcon = styled(InvertedIcon)(
   })
 );
 
-interface Algorithm {
-  key: string;
-  value: string;
-}
-
 interface Props {
-  defaultAlgorithm: any;
-  algorithms: any[];
+  algorithms: Algorithms;
+  algorithm: Algorithm;
+  defaultAlgorithm: Algorithm;
   onAlgorithmChange: (algorithm: string) => void;
   onThemeChange: (theme: string) => void;
+  onAlgorithmVisibilityChange: (visible: boolean) => void;
   theme: ThemeProps;
 }
 
 function HeaderComponent({
-  defaultAlgorithm,
+  algorithm,
   algorithms,
+  defaultAlgorithm,
   onAlgorithmChange,
+  onAlgorithmVisibilityChange,
   onThemeChange,
   theme
 }: Props) {
@@ -60,11 +66,17 @@ function HeaderComponent({
         items={algorithms}
         onAlgorithmChange={onAlgorithmChange}
       />
-      <Accessible
-        ariaLabel={`Toggle ${opposite} mode`}
-        onClick={() => onThemeChange(opposite)}
-        render={() => <LightbulbIcon />}
-      />
+      <Buttons>
+        <Visibility
+          hidden={algorithm.hidden}
+          onVisibilitySwitch={onAlgorithmVisibilityChange}
+        />
+        <Accessible
+          ariaLabel={`Toggle ${opposite} mode`}
+          onClick={() => onThemeChange(opposite)}
+          render={() => <LightbulbIcon />}
+        />
+      </Buttons>
     </Header>
   );
 }
