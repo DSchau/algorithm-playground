@@ -7,6 +7,12 @@
  *
  * MORE INFO: https://en.wikipedia.org/wiki/Quicksort
  */
+function swap(arr, current, next) {
+  const temp = arr[current];
+  arr[current] = arr[next];
+  arr[next] = temp;
+}
+
 function partition(arr, left, right) {
   const pivot = arr[Math.floor((right + left) / 2)];
 
@@ -21,7 +27,7 @@ function partition(arr, left, right) {
       j--;
     }
     if (i <= j) {
-      [arr[i], arr[j]] = [arr[j], arr[i]];
+      swap(arr, j, i);
       i++;
       j--;
     }
