@@ -21,6 +21,7 @@ export function Visibility({ hidden, onVisibilitySwitch }: Props) {
   const Icon = StyledIcon(hidden ? VisibilityOn : VisibilityOff);
   return (
     <Accessible
+      ariaLabel={`${hidden ? 'Show' : 'Hide'} solved code snippet`}
       onClick={() => onVisibilitySwitch(!hidden)}
       render={() => <Icon />}
     />

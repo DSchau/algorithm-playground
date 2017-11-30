@@ -8,12 +8,18 @@
  *
  * MORE INFO: https://en.wikipedia.org/wiki/Cocktail_shaker_sort
  */
+function swap(arr, current, next) {
+  const temp = arr[current];
+  arr[current] = arr[next];
+  arr[next] = temp;
+}
+
 export function cocktailSort(arr) {
   let isSorted = true;
   while (isSorted) {
     for (let i = 0; i < arr.length - 1; i++) {
       if (arr[i] > arr[i + 1]) {
-        [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
+        swap(arr, i, i + 1);
         isSorted = true;
       }
     }
@@ -24,8 +30,7 @@ export function cocktailSort(arr) {
 
     for (let j = arr.length - 1; j > 0; j--) {
       if (arr[j - 1] > arr[j]) {
-        [arr[j], arr[j - 1]] = [arr[j - 1], arr[j]];
-
+        swap(arr, j, j - 1);
         isSorted = true;
       }
     }
