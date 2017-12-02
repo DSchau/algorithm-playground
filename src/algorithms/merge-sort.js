@@ -27,7 +27,7 @@ function merge(arr, left, right) {
     buffer.push(right.shift());
   }
 
-  // NOTE: This is NOT reuqired for the sorting algorithm
+  // NOTE: This is NOT required for the sorting algorithm
   trackMutations(arr, buffer);
 
   return buffer;
